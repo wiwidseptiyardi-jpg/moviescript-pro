@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieScript.Pro - Aplikasi Pembuat Naskah Film Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .script-font {
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.2; 
+        }
+        .script-page {
+            background: white;
+            width: 210mm;
+            min-height: 297mm; 
+            padding: 2.54cm; 
+            margin: 0 auto 2rem auto; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            color: #000;
+            font-size: 12pt;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .pdf-download-mode {
+            width: 159.2mm !important; 
+            max-width: 159.2mm !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            background: white !important;
+        }
+        .pdf-download-mode .script-page {
+            width: 159.2mm !important;
+            max-width: 159.2mm !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            min-height: auto !important;
+            height: auto !important; 
+        }
+
+        .title-page-container {
+            width: 100%;
+            display: block;
+        }
+
+        #scriptContent > div:first-child {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .scene-heading, .action-line, .character-name, .parenthetical, .dialogue {
+            page-break-inside: avoid !important;
+        }
+        
+        .scene-heading {
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: left !important;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            page-break-after: avoid !important;
+        }
+        .action-line {
+            text-align: left !important;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+        .character-name {
+            text-align: center !important;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            width: 50%;
+            margin-left: 25%;
+            font-weight: bold;
+            text-transform: uppercase;
+            page-break-after: avoid !important;
+        }
+        .parenthetical {
+            text-align: left !important;
+            width: 40%;
+            margin-left: 30%;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .dialogue {
+            text-align: left !important;
+            width: 60%;
+            margin-left: 20%;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen relative">
+
+<!-- AUTHENTICATION CONTAINER -->
+<div id="authContainer" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-700 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.98)), url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=2070&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+    <div class="w-full max-w-md p-8 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden bg-slate-900/60 backdrop-blur-xl border border-slate-700/50">
+        
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
+        <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-500 rounded-full mix-blend-screen filter blur-[60px] opacity-30 pointer-events-none"></div>
+        <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500 rounded-full mix-blend-screen filter blur-[60px] opacity-30 pointer-events-none"></div>
+        
+        <div class="text-center mb-8 relative z-10">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-slate-900/80 border border-cyan-500/30 mb-4 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM6 4h12v2H6V4zm12 16H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V8h12v4z"/>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500 tracking-tighter drop-shadow-md">MovieScript.AI</h1>
+            <p class="text-[9px] text-cyan-100/60 uppercase tracking-[0.25em] mt-2">Aplikasi Pembuat Naskah Film Otomatis</p>
+        </div>
+
+        <!-- LOGIN VIEW -->
+        <div id="loginView" class="block relative z-10">
+            <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
+                <span class="w-1.5 h-4 bg-cyan-500 rounded-sm shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span> LOGIN PREMIUM
+            </h2>
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[9px] font-bold text-cyan-500/80 uppercase mb-1 tracking-wider">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition text-sm text-white placeholder-slate-600" placeholder="user@moviescript.ai">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-cyan-500/80 uppercase mb-1 tracking-wider">Password</label>
+                    <input type="password" id="loginPass" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition text-sm text-white placeholder-slate-600" placeholder="••••••••">
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="switchView('forgotView')" class="text-[10px] font-bold text-cyan-400 hover:text-cyan-300 hover:underline transition">Lupa Passwordnya?</button>
+                </div>
+                <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-blue-700 to-cyan-600 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)] transition-all flex justify-center items-center gap-2 mt-2 tracking-widest text-xs uppercase">
+                    <span>ACCESS SYSTEM</span>
+                    <div id="loginLoader" class="loader !w-4 !h-4 !border-2 hidden"></div>
+                </button>
+            </form>
+            
+            <div class="mt-6 flex flex-col gap-3">
+                <button onclick="switchView('guestView')" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold py-3 rounded-xl transition text-xs tracking-wider flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                    </svg> COBA GRATIS (TAMU)
+                </button>
+                <p class="text-center text-[10px] text-slate-400 uppercase tracking-wider">
+                    BELUM PUNYA AKUN PREMIUM? <button onclick="switchView('signupView')" class="font-bold text-cyan-400 hover:text-cyan-300 border-b border-cyan-400/30 pb-0.5 ml-1">REGISTRASI</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- GUEST VIEW (TRIAL MODE) -->
+        <div id="guestView" class="hidden relative z-10">
+            <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
+                <span class="w-1.5 h-4 bg-green-500 rounded-sm shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> AKSES TAMU
+            </h2>
+            <p class="text-[10px] text-slate-400 mb-5 leading-relaxed">Dapatkan 3 Token gratis untuk mencoba kecanggihan MovieScript.AI</p>
+            <form id="guestForm" onsubmit="handleGuestLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[9px] font-bold text-green-500/80 uppercase mb-1 tracking-wider">Alamat Email Aktif</label>
+                    <input type="email" id="guestEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition text-sm text-white placeholder-slate-600" placeholder="tamu@email.com">
+                </div>
+                <button type="submit" id="btnGuest" class="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-500 hover:to-teal-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(34,197,94,0.4)] hover:shadow-[0_0_25px_rgba(34,197,94,0.6)] transition-all flex justify-center items-center gap-2 mt-2 tracking-widest text-xs uppercase">
+                    <span>MULAI COBA GRATIS</span>
+                    <div id="guestLoader" class="loader !w-4 !h-4 !border-2 hidden"></div>
+                </button>
+            </form>
+            <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
+                SUDAH PUNYA AKUN? <button onclick="switchView('loginView')" class="font-bold text-green-400 hover:text-green-300 border-b border-green-400/30 pb-0.5 ml-1">LOGIN</button>
+            </p>
+        </div>
+
+        <!-- SIGNUP VIEW -->
+        <div id="signupView" class="hidden relative z-10">
+            <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
+                <span class="w-1.5 h-4 bg-purple-500 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span> REGISTRASI PREMIUM
+            </h2>
+            <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
+                <div>
+                    <!-- DIUBAH: "Email Baru" menjadi "Email" -->
+                    <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 tracking-wider">Email</label>
+                    <input type="email" id="signupEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-sm text-white placeholder-slate-600" placeholder="Masukkan email aktif">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 tracking-wider">Password</label>
+                    <input type="password" id="signupPass" required minlength="6" maxlength="6" placeholder="Masukkan 6 karakter bebas (huruf/angka)" class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-sm text-white placeholder-slate-600">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 flex justify-between items-center tracking-wider">
+                        kode akses
+                        <button type="button" onclick="openQrisModal()" class="text-[9px] font-bold text-purple-300 hover:text-white flex items-center gap-1 bg-purple-900/50 px-2 py-0.5 rounded border border-purple-500/30 hover:border-purple-400 transition">
+                            BELI KODE AKSES
+                        </button>
+                    </label>
+                    <input type="text" id="signupCode" required placeholder="masukan kode akses" class="w-full p-3 bg-purple-900/10 border border-purple-500/50 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 transition text-sm font-mono text-center tracking-widest uppercase text-white placeholder-purple-300/30">
+                </div>
+                <button type="submit" id="btnSignup" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(168,85,247,0.4)] hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] transition-all mt-2 flex justify-center items-center gap-2 tracking-widest text-xs uppercase">
+                    <span>DAFTAR AKUN</span>
+                    <div id="signupLoader" class="loader !w-4 !h-4 !border-2 hidden"></div>
+                </button>
+            </form>
+            <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
+                SUDAH PUNYA AKUN? <button onclick="switchView('loginView')" class="font-bold text-purple-400 hover:text-purple-300 border-b border-purple-400/30 pb-0.5 ml-1">LOGIN</button>
+            </p>
+        </div>
+
+        <!-- FORGOT PASSWORD VIEW (RESET PASSWORD) -->
+        <div id="forgotView" class="hidden relative z-10">
+            <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
+                <span class="w-1.5 h-4 bg-yellow-500 rounded-sm shadow-[0_0_8px_rgba(234,179,8,0.8)]"></span> RESET PASSWORD
+            </h2>
+            <div id="resetSuccessMsg" class="hidden text-[10px] font-bold text-green-400 mb-4 bg-green-500/10 p-3 rounded-xl border border-green-500/30 leading-relaxed italic">
+                Tautan reset password telah dikirim ke email Anda. Silakan cek Inbox/Spam.
+            </div>
+            <p id="forgotInstruction" class="text-[10px] text-slate-400 mb-5 leading-relaxed">Masukkan email Anda untuk menerima tautan reset password dari sistem.</p>
+            <form id="forgotForm" onsubmit="handleForgot(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[9px] font-bold text-yellow-500/80 uppercase mb-1 tracking-wider">Email Terdaftar</label>
+                    <input type="email" id="forgotEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition text-sm text-white placeholder-slate-600">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:shadow-[0_0_25px_rgba(234,179,8,0.6)] transition tracking-widest text-xs uppercase">KIRIM TAUTAN RESET</button>
+            </form>
+            <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
+                SUDAH INGAT PASSWORDNYA? <button onclick="switchView('loginView')" class="font-bold text-yellow-400 hover:text-yellow-300 border-b border-yellow-400/30 pb-0.5 ml-1">LOGIN</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- UPGRADE MODAL -->
+<div id="qrisModal" class="fixed inset-0 z-[150] bg-slate-900/80 backdrop-blur-sm hidden flex justify-center items-center p-4 transition-opacity">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-5 text-center relative">
+            <button onclick="closeQrisModal()" class="absolute top-3 right-3 text-white/70 hover:text-white font-bold p-1">✕</button>
+            <h2 class="text-xl font-black text-white tracking-tight">UPGRADE PREMIUM</h2>
+            <p class="text-xs text-purple-100 mt-1">Akses Tanpa Batas & Riwayat Cloud</p>
+        </div>
+        <div class="p-6 text-center space-y-4">
+            <div class="bg-slate-100 p-6 rounded-xl border border-slate-200">
+                <p class="text-sm font-bold text-slate-700 mb-1">Dapatkan Kode Akses</p>
+                <p class="text-2xl font-black text-green-600">Rp 25.000</p>
+                <p class="text-[10px] text-slate-500 mt-2 font-medium">Beli kode akses premium melalui Admin untuk menggunakan aplikasi sepuasnya.</p>
+            </div>
+            
+            <a href="https://wa.me/6287838960454?text=Halo%20Admin,%20saya%20ingin%20membeli%20Kode%20Akses%20Premium%20MovieScript.AI%20seharga%20Rp25.000." target="_blank" class="w-full block bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl shadow-md transition text-sm uppercase tracking-wider">
+                HUBUNGI ADMIN
+            </a>
+            
+            <button onclick="closeQrisModal(); document.getElementById('appContainer').classList.contains('hidden') ? switchView('signupView') : handleLogout()" class="text-xs text-slate-500 font-bold hover:text-purple-600 transition underline pt-2 block w-full text-center uppercase tracking-wider">
+                SUDAH DAPAT KODE? DAFTAR DI SINI
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN APP CONTAINER -->
+<div id="appContainer" class="hidden">
+    <nav class="bg-slate-900 text-white p-4 shadow-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex flex-col">
+                <h1 class="text-xl font-bold tracking-tighter flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM6 4h12v2H6V4zm12 16H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V8h12v4z"/>
+                    </svg>
+                    MovieScript.AI
+                </h1>
+                <p class="text-[10px] text-slate-400 font-medium tracking-wide uppercase mt-0.5 ml-8">Aplikasi Pembuat Naskah Film Otomatis</p>
+            </div>
+            <div class="flex items-center gap-4 text-[10px] text-slate-300 font-mono uppercase">
+                <span id="userDisplay" class="font-bold text-blue-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden md:inline-block"></span>
+                
+                <!-- PREMIUM BADGE -->
+                <span id="premiumBadge" class="hidden font-bold text-yellow-400 bg-yellow-900/40 px-3 py-1 rounded-full border border-yellow-700">
+                    AKUN PREMIUM
+                </span>
+
+                <!-- TOKEN BADGE (Khusus Tamu) -->
+                <span id="tokenBadge" class="hidden font-bold text-green-400 bg-green-900/40 px-3 py-1 rounded-full border border-green-700">
+                    Sisa Token: <span id="tokenCountText">3</span>
+                </span>
+                
+                <button id="btnNewProject" onclick="resetWorkspace()" class="hover:text-green-400 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-green-500 font-bold" title="Buat Project Naskah Baru">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 10-2 0h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg> <span class="hidden md:inline">Baru</span>
+                </button>
+
+                <button id="btnHistory" onclick="openHistoryModal()" class="hover:text-white transition flex items-center gap-1 border-l border-slate-700 pl-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                    </svg> <span class="hidden md:inline">Riwayat</span>
+                </button>
+
+                <button id="btnUpgrade" onclick="openQrisModal()" class="hidden hover:text-yellow-300 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-yellow-400 font-bold" title="Upgrade ke Akun Premium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg> <span class="hidden md:inline uppercase">UPGRADE</span>
+                </button>
+
+                <button onclick="handleLogout()" class="hover:text-red-400 transition underline ml-2 border-l border-slate-700 pl-4 text-red-500 font-bold">Keluar</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <div class="lg:col-span-5 space-y-5 overflow-y-auto max-h-[calc(100vh-140px)] pr-2">
+            
+            <section class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span> Cover Script
+                </h2>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Judul Film</label>
+                        <input type="text" id="title" oninput="updateTitlePage()" placeholder="Masukkan Judul Film" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition font-bold text-gray-800">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Penulis</label>
+                            <input type="text" id="author" oninput="updateTitlePage()" placeholder="Nama Penulis" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Draft Ke-</label>
+                            <select id="draft" onchange="updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                <option value="Draft 1">Draft 1</option>
+                                <option value="Draft 2">Draft 2</option>
+                                <option value="Draft 3">Draft 3</option>
+                                <option value="Draft 4">Draft 4</option>
+                                <option value="Final Draft">Final Draft</option>
+                                <option value="Shooting Script">Shooting Script</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                         <div>
+                            <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Tanggal</label>
+                            <input type="date" id="date" onchange="updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-600">
+                        </div>
+                        <div>
+                             <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Rumah Produksi</label>
+                            <input type="text" id="productionHouse" oninput="updateTitlePage()" placeholder="Contoh: Sebelas Sinema" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Kontak (HP / Email)</label>
+                        <input type="text" id="contact" oninput="updateTitlePage()" placeholder="0812xxxx / email@domain.com" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                 <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span> Detail Cerita & Plot
+                </h2>
+                 <div class="space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Durasi</label>
+                            <select id="duration" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                                <option value="3-5 menit">3-5 Menit (3-5 Hal)</option>
+                                <option value="10-15 menit">10-15 Menit (10-15 Hal)</option>
+                                <option value="20-25 menit">20-25 Menit (20-25 Hal)</option>
+                                <option value="25-30 menit">25-30 Menit (25-30 Hal)</option>
+                                <option value="Feature Film">Feature Film (>60 Hal)</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Genre</label>
+                            <select id="genre" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                                <option value="Drama">Drama</option>
+                                <option value="Komedi">Komedi</option>
+                                <option value="Horor">Horor</option>
+                                <option value="Thriller">Thriller</option>
+                                <option value="Animasi">Animasi</option>
+                                <option value="Sci-Fi">Sci-Fiction</option>
+                                <option value="Action">Action</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Setting Waktu</label>
+                            <select id="timeSetting" onchange="toggleCustom('timeSetting', 'customTimeInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                                <option value="Sekarang (Present)">Sekarang (Modern)</option>
+                                <option value="Masa Lalu (Sejarah)">Masa Lalu (Sejarah)</option>
+                                <option value="Masa Depan (Futuristik)">Masa Depan (Sci-Fi)</option>
+                                <option value="Campuran / Lintas Waktu">Campuran / Lintas Waktu</option>
+                                <option value="Lainnya">Lainnya (Isi Sendiri)</option>
+                            </select>
+                            <input type="text" id="customTimeInput" class="hidden mt-1 p-2 bg-blue-50 border border-blue-200 rounded text-xs focus:ring-2 focus:ring-blue-400 outline-none placeholder-blue-300" placeholder="Tulis setting waktu...">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Setting Tempat</label>
+                            <select id="placeSetting" onchange="toggleCustom('placeSetting', 'customPlaceInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                                <option value="Perkotaan (Urban)">Perkotaan (Urban)</option>
+                                <option value="Pedesaan (Rural)">Pedesaan (Rural)</option>
+                                <option value="Alam Liar / Hutan">Alam Liar / Hutan</option>
+                                <option value="Fantasi / Fiksi">Dunia Fantasi</option>
+                                <option value="Ruang Angkasa">Ruang Angkasa</option>
+                                <option value="Terbatas (Satu Ruangan)">Terbatas (Satu Ruangan)</option>
+                                <option value="Lainnya">Lainnya (Isi Sendiri)</option>
+                            </select>
+                            <input type="text" id="customPlaceInput" class="hidden mt-1 p-2 bg-blue-50 border border-blue-200 rounded text-xs focus:ring-2 focus:ring-blue-400 outline-none placeholder-blue-300" placeholder="Tulis setting tempat...">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Tema Cerita</label>
+                            <input type="text" id="theme" placeholder="Misal: Persahabatan" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Tipe Ending</label>
+                            <select id="endingType" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                                <option value="Happy Ending">Happy Ending</option>
+                                <option value="Sad Ending">Sad Ending</option>
+                                <option value="Plot Twist">Plot Twist</option>
+                                <option value="Open Ending">Open Ending (Gantung)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1 block">Premis Cerita</label>
+                            <button type="button" id="btn-opt-premise" onclick="window.optimizeField('premise', 'premis')" class="text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-2 py-0.5 rounded flex items-center gap-1 font-bold transition shadow-sm" title="Perbaiki dan kembangkan dengan AI">✨ AI Optimize</button>
+                        </div>
+                        <textarea id="premise" rows="2" placeholder="Tuliskan ide kasar premis ceritanya di sini..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-400 text-sm"></textarea>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <label class="text-[9px] uppercase font-bold text-slate-400 ml-1 block">Sinopsis</label>
+                            <button type="button" id="btn-opt-synopsis" onclick="window.optimizeField('synopsis', 'sinopsis')" class="text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-2 py-0.5 rounded flex items-center gap-1 font-bold transition shadow-sm" title="Perbaiki dan kembangkan dengan AI">✨ AI Optimize</button>
+                        </div>
+                        <textarea id="synopsis" rows="3" placeholder="Tuliskan draf kasar sinopsis singkat..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-400 text-sm"></textarea>
+                    </div>
+
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block border-b pb-1">Struktur Plot (Plot Points)</label>
+                        <div class="space-y-2">
+                            <div class="relative">
+                                <span class="absolute top-2.5 left-2 text-[10px] font-bold text-blue-500 bg-blue-100 px-1.5 rounded z-10">1</span>
+                                <textarea id="plotIntro" rows="2" placeholder="PERKENALAN: Siapa tokohnya & apa masalah awalnya?" class="w-full pl-8 pr-16 p-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-xs"></textarea>
+                                <button type="button" id="btn-opt-plotIntro" onclick="window.optimizeField('plotIntro', 'plot perkenalan')" class="absolute top-2 right-2 text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-1.5 py-0.5 rounded flex items-center font-bold transition shadow-sm" title="Optimalkan Plot">✨ AI</button>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute top-2.5 left-2 text-[10px] font-bold text-orange-500 bg-orange-100 px-1.5 rounded z-10">2</span>
+                                <textarea id="plotConflict" rows="2" placeholder="KONFLIK: Apa rintangan utamanya?" class="w-full pl-8 pr-16 p-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-xs"></textarea>
+                                <button type="button" id="btn-opt-plotConflict" onclick="window.optimizeField('plotConflict', 'plot konflik')" class="absolute top-2 right-2 text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-1.5 py-0.5 rounded flex items-center font-bold transition shadow-sm" title="Optimalkan Plot">✨ AI</button>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute top-2.5 left-2 text-[10px] font-bold text-red-500 bg-red-100 px-1.5 rounded z-10">3</span>
+                                <textarea id="plotClimax" rows="2" placeholder="KLIMAKS: Puncak ketegangan cerita." class="w-full pl-8 pr-16 p-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-xs"></textarea>
+                                <button type="button" id="btn-opt-plotClimax" onclick="window.optimizeField('plotClimax', 'plot klimaks')" class="absolute top-2 right-2 text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-1.5 py-0.5 rounded flex items-center font-bold transition shadow-sm" title="Optimalkan Plot">✨ AI</button>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute top-2.5 left-2 text-[10px] font-bold text-green-500 bg-green-100 px-1.5 rounded z-10">4</span>
+                                <textarea id="plotResolution" rows="2" placeholder="ENDING: Bagaimana akhirnya? (Sesuai Tipe Ending)" class="w-full pl-8 pr-16 p-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-xs"></textarea>
+                                <button type="button" id="btn-opt-plotResolution" onclick="window.optimizeField('plotResolution', 'plot ending')" class="absolute top-2 right-2 text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-1.5 py-0.5 rounded flex items-center font-bold transition shadow-sm" title="Optimalkan Plot">✨ AI</button>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <section class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span> Daftar Karakter
+                    </h2>
+                    <button onclick="addCharacter()" class="text-[10px] bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold hover:bg-blue-700 shadow-md transition flex items-center gap-1">
+                        <span>+ TAMBAH</span>
+                    </button>
+                </div>
+                
+                <div id="characterList" class="space-y-4">
+                    </div>
+            </section>
+
+            <button onclick="generateScript()" id="generateBtn" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2">
+                <span>GENERATE NASKAH OTOMATIS</span>
+                <div id="btnLoader" class="loader hidden"></div>
+            </button>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col h-[calc(100vh-100px)]">
+            <div class="bg-slate-200 p-3 rounded-t-xl border-x border-t border-slate-300 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-slate-600 uppercase tracking-widest font-mono">Preview Script</span>
+                    <div id="durationTag" class="hidden px-2 py-0.5 bg-blue-600 text-white text-[10px] rounded-full uppercase font-mono">Est. <span id="durValue">0</span> Min</div>
+                </div>
+                <div class="flex gap-2">
+                    <button id="btnSaveScript" onclick="saveCurrentScript()" class="hidden px-3 py-1.5 bg-blue-600 text-white border border-blue-700 rounded text-xs font-semibold hover:bg-blue-700 transition shadow-sm flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg> Simpan Naskah
+                    </button>
+                    <button onclick="copyScript()" class="px-3 py-1.5 bg-white border border-slate-300 rounded text-xs font-semibold hover:bg-slate-50 transition shadow-sm">Copy Teks</button>
+                    <div class="relative group">
+                        <button class="px-3 py-1.5 bg-red-600 text-white rounded text-xs font-semibold flex items-center gap-1 shadow-sm hover:bg-red-700">
+                            Download Dokumen ▾
+                        </button>
+                        <div class="absolute right-0 mt-1 w-44 bg-white shadow-2xl rounded-md border border-slate-200 hidden group-hover:block z-10 overflow-hidden">
+                            <button onclick="downloadPDF()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-red-600">
+                                 Download PDF
+                            </button>
+                            <button onclick="downloadDoc()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-blue-600">
+                                 Word Document (.doc)
+                            </button>
+                            <button onclick="downloadFDX()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 flex items-center gap-2">
+                                 Final Draft (.fdx)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overflow-y-auto bg-slate-300 p-4 border-x border-b border-slate-300 h-full">
+                <div id="printArea">
+                    
+                    <!-- TATA LETAK COVER -->
+                    <div id="titlePage" class="script-page script-font">
+                        <div class="title-page-container">
+                            <div style="width: 100%; text-align: center; margin: 0; padding: 0;"> 
+                                <h1 id="dispTitle" style="font-size: 24pt; font-weight: bold; text-transform: uppercase; margin: 0; padding: 0; line-height: 1;">JUDUL FILM</h1>
+                                <p style="margin: 20px 0 5px 0; padding: 0; font-size: 12pt;">By</p>
+                                <p id="dispAuthor" style="font-weight: bold; margin: 0; padding: 0; font-size: 12pt;">Nama Penulis</p>
+                            </div>
+                            <div style="width: 100%; text-align: center; margin-top: 100px;">
+                                <p id="dispDraftInfo" style="font-style: italic; margin: 0; padding: 0; font-size: 12pt;">#DRAFT 1: [Tanggal]</p>
+                            </div>
+                            <div style="width: 100%; font-size: 12pt; margin-top: 150px;">
+                                <div style="float: left; text-align: left;">
+                                    <p id="dispProd" style="text-transform: uppercase; font-weight: bold; margin: 0; padding: 0;">RUMAH PRODUKSI</p>
+                                    <p id="dispCopyright" style="font-size: 10pt; margin: 5px 0 0 0; padding: 0;">@2024</p>
+                                </div>
+                                <div style="float: right; text-align: right;">
+                                    <p id="dispContact" style="margin: 0; padding: 0;">Kontak</p>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="scriptContent" class="script-page script-font hidden"></div>
+                    
+                    <div id="placeholderState" class="script-page flex flex-col items-center justify-center text-slate-400">
+                        <p class="uppercase font-bold">Area Naskah</p>
+                        <p class="text-sm">Isi data di sebelah kiri untuk memulai.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- MODAL RIWAYAT NASKAH (POPUP TENGAH) -->
+<div id="historyModal" class="fixed inset-0 z-[110] bg-slate-900/60 hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col transform transition-transform overflow-hidden max-h-[85vh]">
+        <div class="p-6 border-b border-slate-100 relative">
+            <button onclick="closeHistoryModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition font-bold p-1 text-xl">✕</button>
+            <div class="flex items-center gap-2 mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h2 class="text-xl font-bold text-slate-800">Riwayat Naskah</h2>
+            </div>
+            <p class="text-[10px] font-bold text-slate-500 tracking-wider uppercase ml-8 mt-1">
+                KUOTA PENYIMPANAN: <span id="quotaCount" class="text-emerald-500">0</span> / 10 NASKAH
+            </p>
+        </div>
+        <div id="historyList" class="p-6 overflow-y-auto flex-1 space-y-3 bg-slate-50/50">
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity pointer-events-none z-[120] text-sm text-center">
+    Pesan Notifikasi
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKDubAgUlYyXL5kdda0z4qTSeReuuScmUas2jKIFfkDanNopuaGzUHeoH7KJaoEgT-RA/exec";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBv2W26CoAOpxqFD0te83GoUm6sh5bQ3ro",
+      authDomain: "movie-script-925d3.firebaseapp.com",
+      projectId: "movie-script-925d3",
+      storageBucket: "movie-script-925d3.firebasestorage.app",
+      messagingSenderId: "405897726844",
+      appId: "1:405897726844:web:78539bbcdcaefe2477b2f9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let characterCount = 0;
+    let currentUser = null;
+    let currentCustomEmail = null;
+    let currentHistoryData = []; 
+    let currentGeneratedScript = null; 
+    
+    let isGuestMode = false;
+    let guestTokenCount = 0;
+
+    onAuthStateChanged(auth, async (user) => {
+        currentUser = user;
+        if (user && !user.isAnonymous) {
+            currentCustomEmail = user.email;
+            isGuestMode = false;
+        }
+    });
+
+    window.showToast = function(message, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.innerHTML = message;
+        if (isError) {
+            toast.classList.remove('bg-slate-900');
+            toast.classList.add('bg-red-600');
+        } else {
+            toast.classList.remove('bg-red-600');
+            toast.classList.add('bg-slate-900');
+        }
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 4500);
+    }
+
+    window.switchView = function(viewId) {
+        document.getElementById('loginView').classList.add('hidden');
+        document.getElementById('signupView').classList.add('hidden');
+        document.getElementById('forgotView').classList.add('hidden');
+        document.getElementById('guestView').classList.add('hidden');
+        document.getElementById(viewId).classList.remove('hidden');
+        
+        document.getElementById('resetSuccessMsg').classList.add('hidden');
+        document.getElementById('forgotInstruction').classList.remove('hidden');
+    }
+
+    window.openQrisModal = function() {
+        document.getElementById('qrisModal').classList.remove('hidden');
+        setTimeout(() => {
+            document.querySelector('#qrisModal > div').classList.remove('scale-95');
+        }, 10);
+    }
+
+    window.closeQrisModal = function() {
+        document.querySelector('#qrisModal > div').classList.add('scale-95');
+        setTimeout(() => {
+            document.getElementById('qrisModal').classList.add('hidden');
+        }, 300);
+    }
+
+    window.resetWorkspace = function() {
+        document.querySelectorAll('#appContainer input[type="text"], #appContainer input[type="date"], #appContainer textarea').forEach(el => el.value = '');
+        
+        document.getElementById('draft').selectedIndex = 0;
+        document.getElementById('duration').selectedIndex = 0;
+        document.getElementById('genre').selectedIndex = 0;
+        document.getElementById('timeSetting').selectedIndex = 0;
+        document.getElementById('placeSetting').selectedIndex = 0;
+        document.getElementById('endingType').selectedIndex = 0;
+        
+        document.getElementById('customTimeInput').classList.add('hidden');
+        document.getElementById('customPlaceInput').classList.add('hidden');
+
+        document.getElementById('characterList').innerHTML = '';
+        characterCount = 0;
+        window.addCharacter(true);
+        
+        document.getElementById('scriptContent').innerHTML = '';
+        document.getElementById('scriptContent').classList.add('hidden');
+        document.getElementById('placeholderState').classList.remove('hidden');
+        document.getElementById('durationTag').classList.add('hidden');
+        document.getElementById('btnSaveScript').classList.add('hidden');
+        currentGeneratedScript = null;
+        
+        document.getElementById('title').value = '';
+        window.updateTitlePage();
+    }
+
+    window.loginSuccess = function(email, isGuest = false) {
+        currentCustomEmail = email; 
+        isGuestMode = isGuest;
+        
+        document.getElementById('authContainer').classList.add('opacity-0');
+        window.resetWorkspace();
+        
+        setTimeout(() => {
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('hidden');
+            document.getElementById('userDisplay').innerText = isGuest ? `Tamu: ${email}` : email;
+            
+            if (isGuest) {
+                document.getElementById('tokenBadge').classList.remove('hidden');
+                document.getElementById('tokenCountText').innerText = guestTokenCount;
+                document.getElementById('premiumBadge').classList.add('hidden');
+                document.getElementById('btnNewProject').classList.add('hidden');
+                document.getElementById('btnHistory').classList.add('hidden');
+                document.getElementById('btnUpgrade').classList.remove('hidden');
+            } else {
+                document.getElementById('tokenBadge').classList.add('hidden');
+                document.getElementById('premiumBadge').classList.remove('hidden');
+                document.getElementById('btnNewProject').classList.remove('hidden');
+                document.getElementById('btnHistory').classList.remove('hidden');
+                document.getElementById('btnUpgrade').classList.add('hidden');
+            }
+            
+            document.getElementById('date').valueAsDate = new Date();
+            window.updateTitlePage();
+            
+            window.showToast(isGuest ? `Masuk sebagai tamu. Anda punya ${guestTokenCount} token percobaan.` : "Berhasil masuk!", false);
+        }, 300);
+    }
+
+    window.handleGuestLogin = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('guestEmail').value.trim().toLowerCase();
+        const btn = document.getElementById('btnGuest');
+        const loader = document.getElementById('guestLoader');
+        
+        if (!email) return;
+
+        const claimedEmail = localStorage.getItem('ms_device_guest_email');
+        if (claimedEmail && claimedEmail !== email) {
+            window.showToast(`Anda sudah mencoba dengan email tamu ${claimedEmail}. Jika ingin mencoba sepuasnya bisa memakai akun premium. Terimakasih`, true);
+            return;
+        }
+        
+        btn.disabled = true;
+        loader.classList.remove('hidden');
+
+        try {
+            await signInAnonymously(auth);
+            
+            const docRef = doc(db, 'guestTokens', email);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                guestTokenCount = docSnap.data().tokens;
+                localStorage.setItem('ms_device_guest_email', email);
+
+                if (guestTokenCount <= 0) {
+                    window.showToast("Token percobaan Anda sudah habis.", true);
+                    openQrisModal();
+                    await signOut(auth);
+                    return;
+                }
+            } else {
+                guestTokenCount = 3;
+                await setDoc(docRef, { 
+                    email: email,
+                    tokens: 3, 
+                    createdAt: new Date().toISOString(),
+                    userAgent: navigator.userAgent 
+                });
+                localStorage.setItem('ms_device_guest_email', email);
+            }
+
+            window.loginSuccess(email, true);
+
+        } catch (error) {
+            console.error(error);
+            window.showToast("Gagal masuk mode tamu: " + error.message, true);
+        } finally {
+            btn.disabled = false;
+            loader.classList.add('hidden');
+        }
+    }
+
+    async function checkAndConsumeToken() {
+        if (!isGuestMode) return true;
+        
+        if (guestTokenCount <= 0) {
+            openQrisModal();
+            return false;
+        }
+
+        try {
+            const docRef = doc(db, 'guestTokens', currentCustomEmail);
+            guestTokenCount--;
+            await setDoc(docRef, { tokens: guestTokenCount, lastUsed: new Date().toISOString() }, { merge: true });
+            document.getElementById('tokenCountText').innerText = guestTokenCount;
+            return true;
+        } catch (error) {
+            window.showToast("Gagal memproses token.", true);
+            return false;
+        }
+    }
+
+    window.handleLogin = async function(e) {
+        e.preventDefault();
+        const btnLogin = document.getElementById('btnLogin');
+        const loader = document.getElementById('loginLoader');
+        
+        btnLogin.disabled = true;
+        loader.classList.remove('hidden');
+
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        
+        if (email === "admin@moviescript.ai" && pass === "admin") {
+            window.loginSuccess(email, false);
+            btnLogin.disabled = false;
+            loader.classList.add('hidden');
+            return;
+        }
+
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+            window.loginSuccess(email, false);
+        } catch (error) {
+            window.showToast("Email belum terdaftar atau password salah!", true);
+        } finally {
+            btnLogin.disabled = false;
+            loader.classList.add('hidden');
+        }
+    }
+
+    window.handleSignup = async function(e) {
+        e.preventDefault();
+        const btnSignup = document.getElementById('btnSignup');
+        const loader = document.getElementById('signupLoader');
+        
+        const email = document.getElementById('signupEmail').value;
+        const pass = document.getElementById('signupPass').value;
+        const code = document.getElementById('signupCode').value;
+        
+        if (pass.length !== 6) {
+            window.showToast("Password harus berjumlah persis 6 karakter!", true);
+            return;
+        }
+
+        btnSignup.disabled = true;
+        loader.classList.remove('hidden');
+
+        try {
+            const verifyResponse = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'verify_code', code: code })
+            });
+            const verifyData = await verifyResponse.json();
+
+            if (!verifyData.valid) {
+                window.showToast("Kode Akses tidak valid!", true);
+                btnSignup.disabled = false;
+                loader.classList.add('hidden');
+                return;
+            }
+
+            await createUserWithEmailAndPassword(auth, email, pass);
+            const uniqueId = 'MSP-' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+            const usersRef = collection(db, 'registeredUsers');
+            await addDoc(usersRef, {
+                uid: uniqueId,
+                email: email,
+                createdAt: new Date().toISOString()
+            });
+
+            await signOut(auth);
+            
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ 
+                        action: 'register',
+                        id: uniqueId,
+                        tanggal: new Date().toLocaleString('id-ID'), 
+                        email: email, 
+                        password: pass 
+                    })
+                });
+            } catch(e){}
+            
+            window.showToast("Berhasil registrasi! Silakan login.", false);
+            window.switchView('loginView');
+        } catch (error) {
+            window.showToast("Gagal menyimpan data: " + error.message, true);
+        } finally {
+            btnSignup.disabled = false;
+            loader.classList.add('hidden');
+        }
+    }
+
+    window.handleForgot = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('forgotEmail').value;
+        const btnSubmit = document.querySelector('#forgotForm button[type="submit"]');
+        
+        if (!email) {
+            window.showToast("Masukkan email Anda!", true);
+            return;
+        }
+
+        btnSubmit.disabled = true;
+        try {
+            await sendPasswordResetEmail(auth, email);
+            document.getElementById('resetSuccessMsg').classList.remove('hidden');
+            document.getElementById('forgotInstruction').classList.add('hidden');
+            
+            window.showToast(`Tautan reset password telah dikirim ke email Anda.`, false);
+        } catch (error) {
+            window.showToast("Gagal mengirim email reset sandi.", true);
+        } finally {
+            btnSubmit.disabled = false;
+        }
+    }
+
+    window.handleLogout = async function() {
+        try {
+            await signOut(auth); 
+            currentCustomEmail = null;
+            isGuestMode = false; 
+            document.getElementById('appContainer').classList.add('hidden');
+            document.getElementById('authContainer').classList.remove('hidden');
+            document.getElementById('premiumBadge').classList.add('hidden');
+            window.resetWorkspace();
+            setTimeout(() => {
+                document.getElementById('authContainer').classList.remove('opacity-0');
+                window.switchView('loginView');
+            }, 50);
+            window.showToast("Berhasil keluar.", false);
+        } catch (e){}
+    }
+
+    window.toggleCustom = function(selectId, inputId) {
+        const select = document.getElementById(selectId);
+        const input = document.getElementById(inputId);
+        if (select.value === "Lainnya") {
+            input.classList.remove('hidden');
+        } else {
+            input.classList.add('hidden');
+        }
+    }
+
+    window.updateTitlePage = function() {
+        const title = document.getElementById('title').value || "JUDUL FILM";
+        const author = document.getElementById('author').value || "Nama Penulis";
+        const draft = document.getElementById('draft').value;
+        const dateInput = document.getElementById('date').value;
+        const prod = document.getElementById('productionHouse').value || "RUMAH PRODUKSI";
+        const contact = document.getElementById('contact').value || "Kontak";
+        let year = dateInput ? new Date(dateInput).getFullYear() : new Date().getFullYear();
+        document.getElementById('dispTitle').innerText = title.toUpperCase();
+        document.getElementById('dispAuthor').innerText = author;
+        document.getElementById('dispDraftInfo').innerText = `#${draft.toUpperCase()}: ${dateInput}`;
+        document.getElementById('dispProd').innerText = prod.toUpperCase();
+        document.getElementById('dispCopyright').innerText = `@${year}`;
+        document.getElementById('dispContact').innerText = contact;
+    }
+
+    window.addCharacter = function(isPrimary = false) {
+        characterCount++;
+        const list = document.getElementById('characterList');
+        const card = document.createElement('div');
+        card.className = "character-card p-4 border border-slate-200 rounded-xl bg-slate-50 space-y-3 relative transition-all hover:border-blue-300";
+        card.id = `char-${characterCount}`;
+        card.innerHTML = `
+            ${!isPrimary ? `<button onclick="window.removeCharacter(${characterCount})" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition text-sm">✕</button>` : ''}
+            <div class="flex items-center gap-2 mb-2">
+                <select class="role-type text-[9px] font-black uppercase p-1.5 rounded bg-white border border-slate-200 shadow-sm">
+                    <option value="Utama" ${isPrimary ? 'selected' : ''}>UTAMA</option>
+                    <option value="Pembantu">PEMBANTU</option>
+                </select>
+                <input type="text" class="char-name flex-1 text-sm font-bold bg-transparent border-b border-slate-300 outline-none uppercase" placeholder="NAMA KARAKTER">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" class="char-age text-xs p-2 bg-white rounded border border-slate-200" placeholder="Umur">
+                <input type="text" class="char-physical text-xs p-2 bg-white rounded border border-slate-200" placeholder="Fisik">
+            </div>
+            <textarea id="char-bg-${characterCount}" class="char-background text-xs w-full p-2 bg-white rounded border border-slate-200" rows="2" placeholder="Latar Belakang..."></textarea>
+        `;
+        list.appendChild(card);
+    }
+
+    window.removeCharacter = function(id) {
+        document.getElementById(`char-${id}`).remove();
+    }
+
+    async function fetchGeminiAPI(userQuery, systemPrompt) {
+        const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
+        const delays = [1000, 2000, 4000];
+
+        const fallbackAPI = async () => {
+            const apiKey = ""; 
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            for (let i = 0; i < 3; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: combinedPrompt }] }] })
+                    });
+                    if (!response.ok) throw new Error();
+                    return await response.json();
+                } catch (error) {
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        };
+
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
+            });
+            const data = await response.json();
+            if (data.error) throw new Error("QUOTA_EXCEEDED");
+            return data;
+        } catch (error) {
+            return await fallbackAPI();
+        }
+    }
+
+    window.optimizeField = async function(elementId, fieldName) {
+        if (!(await checkAndConsumeToken())) return;
+        const element = document.getElementById(elementId);
+        const originalText = element.value.trim();
+        if (!originalText) return window.showToast(`Tulis ide awal ${fieldName} dulu!`, true);
+
+        const btn = document.getElementById(`btn-opt-${elementId}`);
+        const originalBtnHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin inline-block">⏳</span>`;
+
+        const systemPrompt = `Anda adalah konsultan naskah film profesional. Optimalkan teks berikut tanpa basa-basi.`;
+        const userQuery = `Optimalkan ${fieldName}: "${originalText}"`;
+
+        try {
+            const data = await fetchGeminiAPI(userQuery, systemPrompt);
+            let optimizedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (optimizedText) {
+                element.value = optimizedText.trim();
+                window.showToast(`${fieldName} dioptimalkan!`);
+            }
+        } catch (e){} finally {
+            btn.disabled = false;
+            btn.innerHTML = originalBtnHTML;
+        }
+    }
+
+    window.generateScript = async function() {
+        const title = document.getElementById('title').value;
+        const premise = document.getElementById('premise').value;
+        if (!title || !premise) return window.showToast("Lengkapi Judul dan Premis!", true);
+
+        if (!(await checkAndConsumeToken())) return;
+
+        const btn = document.getElementById('generateBtn');
+        const loader = document.getElementById('btnLoader');
+        const scriptBox = document.getElementById('scriptContent');
+        const placeholder = document.getElementById('placeholderState');
+
+        btn.disabled = true;
+        loader.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader"></div><p>AI sedang menulis...</p></div>`;
+        scriptBox.classList.remove('hidden');
+
+        const systemPrompt = `Anda adalah penulis skenario film. Tulis naskah dalam format Hollywood (Kapital untuk Heading & Nama). Gunakan Bahasa Indonesia.`;
+        const userQuery = `Judul: ${title}\nPremis: ${premise}`;
+
+        try {
+            const data = await fetchGeminiAPI(userQuery, systemPrompt);
+            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+                const formattedHTML = formatScriptToHTML(text);
+                scriptBox.innerHTML = formattedHTML;
+                const words = text.split(/\s+/).length;
+                const wordCount = Math.ceil(words / 150);
+                document.getElementById('durValue').innerText = wordCount;
+                document.getElementById('durationTag').classList.remove('hidden');
+                
+                currentGeneratedScript = { title, scriptHTML: formattedHTML, wordCount };
+                if (currentUser && !isGuestMode) {
+                    document.getElementById('btnSaveScript').classList.remove('hidden');
+                }
+            }
+        } catch (e){} finally {
+            btn.disabled = false;
+            loader.classList.add('hidden');
+        }
+    }
+
+    window.saveCurrentScript = async function() {
+        if (!currentGeneratedScript) return;
+        const btn = document.getElementById('btnSaveScript');
+        const originalHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<div class="loader !w-3 !h-3 !border-2 mr-1"></div> Menyimpan...`;
+
+        try {
+            const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
+            const historySnap = await getDocs(historyRef);
+            if (historySnap.size >= 10) {
+                window.showToast("Kuota simpan (10) penuh! Hapus naskah lama di riwayat.", true);
+                return;
+            }
+            await addDoc(historyRef, {
+                customEmail: currentCustomEmail,
+                title: currentGeneratedScript.title,
+                scriptHTML: currentGeneratedScript.scriptHTML,
+                wordCount: currentGeneratedScript.wordCount,
+                createdAt: new Date().toISOString()
+            });
+            window.showToast("Naskah berhasil disimpan!");
+            btn.classList.add('hidden');
+        } catch(e){
+            window.showToast("Gagal menyimpan naskah.", true);
+        } finally { 
+            btn.disabled = false; 
+            if (!btn.classList.contains('hidden')) btn.innerHTML = originalHTML;
+        }
+    }
+
+    function formatScriptToHTML(rawText) {
+        const lines = rawText.split('\n');
+        let html = '';
+        let sceneCount = 0;
+        let lastType = 'none';
+        lines.forEach(line => {
+            let trimmed = line.trim();
+            if (!trimmed) return;
+            if (/^(INT\.|EXT\.|INT\/EXT\.)/i.test(trimmed)) {
+                sceneCount++;
+                html += `<div class="scene-heading"><b>${sceneCount}. ${trimmed.toUpperCase()}</b></div>`;
+                lastType = 'scene';
+            } else if (trimmed === trimmed.toUpperCase() && trimmed.length < 50 && !trimmed.includes('.')) {
+                html += `<div class="character-name"><b>${trimmed}</b></div>`;
+                lastType = 'char';
+            } else if (lastType === 'char') {
+                html += `<div class="dialogue">${trimmed}</div>`;
+                lastType = 'dialogue';
+            } else {
+                html += `<div class="action-line">${trimmed}</div>`;
+                lastType = 'action';
+            }
+        });
+        return html;
+    }
+
+    window.downloadPDF = function() {
+        const element = document.getElementById('printArea');
+        html2pdf().set({ margin: [25.4, 25.4, 25.4, 25.4], filename: 'script.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4' } }).from(element).save();
+    }
+
+    window.downloadDoc = function() {
+        const scriptHTML = document.getElementById('scriptContent').innerHTML;
+        const title = document.getElementById('title').value || "Script";
+        const content = `<html><head><meta charset='utf-8'><style>body{font-family:'Courier New';font-size:12pt}.scene-heading, .character-name{font-weight:bold;text-transform:uppercase}.character-name{text-align:center}.dialogue{margin-left:2.5cm;margin-right:2.5cm}</style></head><body>${scriptHTML}</body></html>`;
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${title}.doc`; a.click();
+    }
+
+    window.downloadFDX = function() {
+        const fdx = `<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Version="4"><Content><Paragraph Type="Action"><Text>${document.getElementById('scriptContent').innerText}</Text></Paragraph></Content></FinalDraft>`;
+        const blob = new Blob([fdx], { type: 'application/xml' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'script.fdx'; a.click();
+    }
+
+    window.copyScript = function() {
+        const textArea = document.createElement("textarea");
+        textArea.value = document.getElementById('scriptContent').innerText;
+        document.body.appendChild(textArea); textArea.select(); document.execCommand("copy");
+        document.body.removeChild(textArea); window.showToast("Salin berhasil!");
+    }
+
+    window.openHistoryModal = async function() {
+        document.getElementById('historyModal').classList.remove('hidden');
+        const listEl = document.getElementById('historyList');
+        listEl.innerHTML = '<div class="text-center py-10"><div class="loader"></div></div>';
+        try {
+            const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
+            const snap = await getDocs(historyRef);
+            currentHistoryData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+            document.getElementById('quotaCount').innerText = currentHistoryData.length;
+            renderHistoryList();
+        } catch(e){}
+    }
+
+    window.closeHistoryModal = function() { document.getElementById('historyModal').classList.add('hidden'); }
+
+    function renderHistoryList() {
+        const listEl = document.getElementById('historyList');
+        if (currentHistoryData.length === 0) { listEl.innerHTML = '<p class="text-center py-10 opacity-50 text-sm">Belum ada riwayat.</p>'; return; }
+        listEl.innerHTML = currentHistoryData.map(item => `
+            <div class="p-4 border border-slate-200 rounded-xl bg-white shadow-sm flex items-center justify-between gap-4" id="hist-${item.id}">
+                <div class="flex-1 cursor-pointer" onclick="loadHistoryItem('${item.id}')">
+                    <h3 class="font-bold text-sm text-slate-800 uppercase line-clamp-1">${item.title || 'NASKAH TANPA JUDUL'}</h3>
+                    <p class="text-[10px] text-slate-400 mt-1">${new Date(item.createdAt).toLocaleDateString('id-ID')} - ${new Date(item.createdAt).toLocaleTimeString('id-ID')}</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="loadHistoryItem('${item.id}')" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg text-xs font-bold border border-blue-100 hover:bg-blue-600 hover:text-white transition">Buka Naskah</button>
+                    <button onclick="deleteHistoryItem('${item.id}')" class="text-slate-300 hover:text-red-500 transition p-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.loadHistoryItem = function(id) {
+        const item = currentHistoryData.find(h => h.id === id);
+        if (!item) return;
+        window.resetWorkspace();
+        document.getElementById('scriptContent').innerHTML = item.scriptHTML;
+        document.getElementById('scriptContent').classList.remove('hidden');
+        document.getElementById('placeholderState').classList.add('hidden');
+        document.getElementById('durValue').innerText = item.wordCount;
+        document.getElementById('durationTag').classList.remove('hidden');
+        document.getElementById('title').value = item.title;
+        window.updateTitlePage();
+        window.closeHistoryModal();
+        window.showToast("Naskah dimuat!");
+    }
+
+    window.deleteHistoryItem = async function(id) {
+        try {
+            await deleteDoc(doc(db, 'users', currentUser.uid, 'scriptHistory', id));
+            document.getElementById(`hist-${id}`).remove();
+            currentHistoryData = currentHistoryData.filter(h => h.id !== id);
+            document.getElementById('quotaCount').innerText = currentHistoryData.length;
+            if (currentHistoryData.length === 0) renderHistoryList();
+            window.showToast("Terhapus.");
+        } catch(e){}
+    }
+</script>
+</body>
+</html>
