@@ -202,7 +202,6 @@
             </h2>
             <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
                 <div>
-                    <!-- DIUBAH: "Email Baru" menjadi "Email" -->
                     <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 tracking-wider">Email</label>
                     <input type="email" id="signupEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-sm text-white placeholder-slate-600" placeholder="Masukkan email aktif">
                 </div>
@@ -267,7 +266,7 @@
                 
                 <!-- GAMBAR QRIS -->
                 <div class="bg-white p-2 rounded-xl inline-block shadow-sm border border-slate-200 mb-2">
-                    <img src="https://i.ibb.co.com/Ng8hKp9C/Screenshot-2026-04-27-194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
+                    <img src="Screenshot 2026-04-27 194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
                 </div>
                 
                 <p class="text-[10px] text-slate-500 mt-1 font-medium">Scan QRIS di atas, lalu kirim bukti pembayaran ke Admin untuk mendapatkan kode akses.</p>
@@ -1019,37 +1018,90 @@
 
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
-        const delays = [1000, 2000, 4000];
+        const delays = [1000, 2000, 4000, 8000, 16000];
+        const isCanvas = window.location.hostname.includes('googleusercontent.com') || window.location.hostname.includes('localhost') || window.location.href.startsWith('blob:');
 
         const fallbackAPI = async () => {
             const apiKey = ""; 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            for (let i = 0; i < 3; i++) {
+            
+            for (let i = 0; i < 5; i++) {
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: combinedPrompt }] }] })
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: combinedPrompt }] }]
+                        })
                     });
-                    if (!response.ok) throw new Error();
+                    if (!response.ok) {
+                        const errText = await response.text();
+                        throw new Error(errText);
+                    }
                     return await response.json();
                 } catch (error) {
+                    if (i === 4 || error.message.toLowerCase().includes("quota") || error.message.includes("403")) {
+                        throw new Error("Gagal terhubung ke AI (Mode Pratinjau): " + error.message);
+                    }
                     await new Promise(resolve => setTimeout(resolve, delays[i]));
                 }
             }
         };
 
-        try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
-            });
-            const data = await response.json();
-            if (data.error) throw new Error("QUOTA_EXCEEDED");
-            return data;
-        } catch (error) {
-            return await fallbackAPI();
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI") {
+            if (isCanvas) return await fallbackAPI();
+            throw new Error("URL Google Apps Script belum dikonfigurasi.");
+        }
+
+        let lastErrorMessage = "";
+        for (let i = 0; i < 5; i++) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
+                });
+                
+                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+                const data = await response.json();
+
+                if (data.error && !data.candidates) {
+                    let errMsg = data.error.message || JSON.stringify(data.error);
+                    const lowerErrMsg = errMsg.toLowerCase();
+                    if (lowerErrMsg.includes("is not found") && lowerErrMsg.includes("models/")) {
+                        throw new Error("Model AI usang! Buka Google Apps Script Anda, ganti 'gemini-1.5-flash' menjadi 'gemini-2.5-flash', lalu Deploy Ulang.");
+                    } else if (lowerErrMsg.includes("urlfetchapp.fetch") || lowerErrMsg.includes("otorisasi") || lowerErrMsg.includes("script.external_request")) {
+                        throw new Error("Otorisasi Backend Diperlukan! Buka Apps Script Anda, jalankan fungsi manual, izinkan, lalu Deploy Ulang.");
+                    } else if (lowerErrMsg.includes("quota") || lowerErrMsg.includes("kuota") || lowerErrMsg.includes("bandwidth") || lowerErrMsg.includes("terlampaui") || lowerErrMsg.includes("429") || lowerErrMsg.includes("503") || lowerErrMsg.includes("high demand")) {
+                        throw new Error("QUOTA_EXCEEDED");
+                    }
+                    throw new Error(errMsg);
+                }
+
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+                    throw new Error("Google Apps Script mengembalikan format data yang tidak dikenali.");
+                }
+                return data;
+
+            } catch (error) {
+                lastErrorMessage = error.message;
+                const lowerLastErr = lastErrorMessage.toLowerCase();
+                
+                if (lastErrorMessage === "QUOTA_EXCEEDED" || lowerLastErr.includes("quota") || lowerLastErr.includes("kuota") || lowerLastErr.includes("bandwidth") || lowerLastErr.includes("terlampaui") || lowerLastErr.includes("429")) {
+                    console.warn("GAS Quota Exceeded. Mengalihkan ke Fallback Canvas...");
+                    return await fallbackAPI();
+                }
+
+                if (lastErrorMessage.includes("Otorisasi Backend Diperlukan") || lastErrorMessage.includes("Model AI usang")) {
+                    throw error;
+                }
+                
+                if (i === 4) {
+                    console.warn("Gagal menghubungi GAS, beralih ke Fallback Canvas...");
+                    return await fallbackAPI();
+                }
+                await new Promise(resolve => setTimeout(resolve, delays[i]));
+            }
         }
     }
 
@@ -1064,17 +1116,49 @@
         btn.disabled = true;
         btn.innerHTML = `<span class="animate-spin inline-block">⏳</span>`;
 
-        const systemPrompt = `Anda adalah konsultan naskah film profesional. Optimalkan teks berikut tanpa basa-basi.`;
-        const userQuery = `Optimalkan ${fieldName}: "${originalText}"`;
+        const genre = document.getElementById('genre').value || "Umum";
+        const theme = document.getElementById('theme').value || "Bebas";
+
+        let formatInstruction = "Buat bahasanya lebih memikat, deskriptif, dan gaya bahasa penulis naskah profesional.";
+        if (fieldName === 'premis') {
+            formatInstruction = "Tulis ulang menjadi format 'Logline' yang sangat kuat, memikat, dan menjual (Maksimal 1 hingga 2 kalimat saja).";
+        } else if (fieldName === 'sinopsis') {
+            formatInstruction = "Tulis ulang menjadi 1 hingga 2 paragraf sinopsis yang dramatis, berfokus pada konflik utama, dan menggugah rasa penasaran penonton.";
+        } else if (fieldName.includes('plot')) {
+            formatInstruction = "Pertajam narasi struktur plot ini agar elemen ketegangan, kausalitas (sebab-akibat), dan motivasi karakternya jauh lebih masuk akal dan terasa kuat.";
+        } else if (fieldName.includes('latar belakang')) {
+            const charCard = element.closest('.character-card');
+            let charName = "Karakter ini";
+            if (charCard) {
+                const nameInput = charCard.querySelector('.char-name');
+                if (nameInput && nameInput.value.trim() !== "") {
+                    charName = nameInput.value.trim();
+                }
+            }
+            formatInstruction = `Perdalam aspek psikologis, kejadian masa lalu (backstory), trauma, dan motivasi terdalam dari karakter bernama "${charName}" ini agar ia terasa nyata dan kompleks (3 dimensi). PASTIKAN nama "${charName}" selalu disebut dan digunakan dengan benar di dalam narasi hasil optimasinya.`;
+        }
+
+        const systemPrompt = `Anda adalah "Script Doctor" / konsultan naskah film profesional Hollywood.\nTUGAS ANDA: Mengoptimalkan ide kasar dari pengguna menjadi narasi film yang jauh lebih baik, logis, dan sinematik.\n\nATURAN MUTLAK:\n1. JANGAN tambahkan teks pengantar atau penutup (seperti "Berikut adalah hasilnya:" atau "Tentu, ini dia").\n2. LANGSUNG berikan teks murni hasil optimasi saja.\n3. Perbaiki ejaan dan tata bahasa menjadi bahasa Indonesia yang baku, kaya kosa kata, namun tetap luwes untuk skenario.`;
+        const userQuery = `OPTIMALKAN IDE BERIKUT!\n\nElemen Naskah: [${fieldName}]\nGenre Film: [${genre}]\nTema: [${theme}]\n\nIDE KASAR AWAL:\n"${originalText}"\n\nINSTRUKSI FORMATTING:\n${formatInstruction}`;
 
         try {
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
             let optimizedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (optimizedText) {
-                element.value = optimizedText.trim();
+                element.value = optimizedText.trim().replace(/^"|"$/g, '').trim();
                 window.showToast(`${fieldName} dioptimalkan!`);
+            } else {
+                throw new Error("Respon AI kosong.");
             }
-        } catch (e){} finally {
+        } catch (error) {
+            console.error("Optimize Error:", error);
+            let errMsg = error.message.toLowerCase();
+            if (errMsg.includes("quota") || errMsg.includes("kuota") || errMsg.includes("sibuk")) {
+                window.showToast(`Server AI sibuk. Silakan coba beberapa saat lagi.`, true);
+            } else {
+                window.showToast(`Gagal mengoptimalkan. (${error.message}).`, true);
+            }
+        } finally {
             btn.disabled = false;
             btn.innerHTML = originalBtnHTML;
         }
@@ -1085,7 +1169,37 @@
         const premise = document.getElementById('premise').value;
         if (!title || !premise) return window.showToast("Lengkapi Judul dan Premis!", true);
 
+        const characters = [];
+        document.querySelectorAll('.character-card').forEach(card => {
+            const charName = card.querySelector('.char-name').value;
+            if(charName.trim() !== "") {
+                characters.push({ name: charName });
+            }
+        });
+
+        if (characters.length === 0) {
+            window.showToast("Harap lengkapi minimal satu Karakter yang memiliki nama.", true);
+            return;
+        }
+
         if (!(await checkAndConsumeToken())) return;
+
+        const targetDuration = document.getElementById('duration').value;
+        const genre = document.getElementById('genre').value;
+        const synopsis = document.getElementById('synopsis').value;
+        
+        let timeSetting = document.getElementById('timeSetting').value;
+        if(timeSetting === "Lainnya") timeSetting = document.getElementById('customTimeInput').value || "Bebas";
+
+        let placeSetting = document.getElementById('placeSetting').value;
+        if(placeSetting === "Lainnya") placeSetting = document.getElementById('customPlaceInput').value || "Bebas";
+
+        const theme = document.getElementById('theme').value || "Bebas";
+        const endingType = document.getElementById('endingType').value;
+        const plotIntro = document.getElementById('plotIntro').value;
+        const plotConflict = document.getElementById('plotConflict').value;
+        const plotClimax = document.getElementById('plotClimax').value;
+        const plotResolution = document.getElementById('plotResolution').value;
 
         const btn = document.getElementById('generateBtn');
         const loader = document.getElementById('btnLoader');
@@ -1095,11 +1209,60 @@
         btn.disabled = true;
         loader.classList.remove('hidden');
         placeholder.classList.add('hidden');
-        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader"></div><p>AI sedang menulis...</p></div>`;
+        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader mb-4"></div><p class="text-slate-500 font-semibold">AI sedang merangkai adegan dan dialog...</p></div>`;
         scriptBox.classList.remove('hidden');
 
-        const systemPrompt = `Anda adalah penulis skenario film. Tulis naskah dalam format Hollywood (Kapital untuk Heading & Nama). Gunakan Bahasa Indonesia.`;
-        const userQuery = `Judul: ${title}\nPremis: ${premise}`;
+        const charPrompt = [];
+        document.querySelectorAll('.character-card').forEach(card => {
+            const charName = card.querySelector('.char-name').value;
+            if(charName.trim() !== "") {
+                charPrompt.push(`- NAMA: ${charName} (${card.querySelector('.role-type').value})\n  Umur: ${card.querySelector('.char-age').value}\n  Fisik: ${card.querySelector('.char-physical').value}\n  Sifat: ${card.querySelector('.char-traits').value}\n  Latar Belakang: ${card.querySelector('.char-background').value}`);
+            }
+        });
+
+        let plotStructure = "Ikuti alur cerita yang logis dari awal hingga akhir.";
+        if (plotIntro || plotConflict || plotClimax || plotResolution) {
+            plotStructure = `STRUKTUR PLOT UTAMA:
+            1. PERKENALAN: ${plotIntro || "Sesuaikan dengan premis"}
+            2. KONFLIK: ${plotConflict || "Kembangkan konflik dari premis"}
+            3. KLIMAKS: ${plotClimax || "Puncak ketegangan cerita"}
+            4. ENDING (${endingType}): ${plotResolution || "Berikan konklusi yang sesuai"}`;
+        } else {
+            plotStructure = `Pastikan cerita memiliki struktur tiga babak yang jelas dengan ending bertipe: ${endingType}.`;
+        }
+
+        const systemPrompt = `Anda adalah penulis skenario film profesional bertaraf internasional.
+        TUGAS: Tulis naskah film (Scene 1 sampai Selesai) berdasarkan data yang diberikan oleh pengguna.
+        JANGAN MEMBUAT TITLE PAGE (Halaman Judul). LANGSUNG MULAI DENGAN SCENE 1.
+
+        ATURAN FORMATTING (Sangat Penting):
+        1. SCENE HEADING:
+           - Tulis dalam huruf kapital semua. Contoh: INT. KAMAR TIDUR - DAY
+        2. ACTION LINES (Deskripsi Visual):
+           - Tulis dalam paragraf biasa. Jelaskan apa yang terlihat dan terdengar. Jangan jelaskan isi pikiran karakter.
+        3. KARAKTER & DIALOG:
+           - NAMA KARAKTER HARUS DITULIS KAPITAL DI BARIS TERSENDIRI.
+           - DIALOG ditulis persis di bawah nama karakter.
+           - PARENTHETICAL (Instruksi akting) jika ada, tulis di dalam kurung sebelum dialog. Contoh: (sambil menangis)
+
+        PANDUAN KONTEN:
+        - Buat dialog yang natural dan tidak kaku.
+        - Sesuaikan deskripsi dan dialog dengan SETTING WAKTU (${timeSetting}) dan TEMPAT (${placeSetting}).
+        - Estimasi durasi: ${targetDuration}.
+        - Tema: ${theme}.
+        - Bahasa: Indonesia.`;
+
+        const userQuery = `GENERATE NASKAH FILM LENGKAP:
+        Judul: ${title}
+        Genre: ${genre}
+        Tema Utama: ${theme}
+        Premis: ${premise}
+        Sinopsis: ${synopsis}
+        
+        ${plotStructure}
+
+        DAFTAR KARAKTER:
+        ${charPrompt.join('\n\n')}`;
 
         try {
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
@@ -1112,12 +1275,40 @@
                 document.getElementById('durValue').innerText = wordCount;
                 document.getElementById('durationTag').classList.remove('hidden');
                 
-                currentGeneratedScript = { title, scriptHTML: formattedHTML, wordCount };
+                currentGeneratedScript = { title, genre, scriptHTML: formattedHTML, wordCount };
                 if (currentUser && !isGuestMode) {
                     document.getElementById('btnSaveScript').classList.remove('hidden');
                 }
+                window.showToast("Naskah berhasil dibuat!", false);
+            } else {
+                throw new Error("Respon AI tidak valid atau kosong.");
             }
-        } catch (e){} finally {
+        } catch (error){
+            console.error("Generate Error:", error);
+            let errorMessage = "Gagal terhubung ke server. " + (error.message || "");
+
+            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("kuota") || errorMessage.toLowerCase().includes("sibuk")) {
+               window.showToast("Server AI sedang sibuk. Kuota tercapai. Silakan coba sesaat lagi.", true);
+               scriptBox.innerHTML = `
+                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Server Google sedang penuh antrean atau kuota habis.<br>
+                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 1 menit lalu coba lagi.</span>
+                </div>`;
+            } else {
+                scriptBox.innerHTML = `
+                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Terjadi kesalahan teknis.<br>
+                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Detail: ${errorMessage}</span>
+                </div>`;
+                window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
+            }
+        } finally {
             btn.disabled = false;
             loader.classList.add('hidden');
         }
