@@ -1016,92 +1016,34 @@
         document.getElementById(`char-${id}`).remove();
     }
 
+    // FUNGSI API YANG DISEDERHANAKAN AGAR BERJALAN LANCAR DI VERCEL
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
-        const delays = [1000, 2000, 4000, 8000, 16000];
-        const isCanvas = window.location.hostname.includes('googleusercontent.com') || window.location.hostname.includes('localhost') || window.location.href.startsWith('blob:');
-
-        const fallbackAPI = async () => {
-            const apiKey = ""; 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: combinedPrompt }] }]
-                        })
-                    });
-                    if (!response.ok) {
-                        const errText = await response.text();
-                        throw new Error(errText);
-                    }
-                    return await response.json();
-                } catch (error) {
-                    if (i === 4 || error.message.toLowerCase().includes("quota") || error.message.includes("403")) {
-                        throw new Error("Gagal terhubung ke AI (Mode Pratinjau): " + error.message);
-                    }
-                    await new Promise(resolve => setTimeout(resolve, delays[i]));
-                }
-            }
-        };
 
         if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI") {
-            if (isCanvas) return await fallbackAPI();
             throw new Error("URL Google Apps Script belum dikonfigurasi.");
         }
 
-        let lastErrorMessage = "";
-        for (let i = 0; i < 5; i++) {
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
-                });
-                
-                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
-                const data = await response.json();
-
-                if (data.error && !data.candidates) {
-                    let errMsg = data.error.message || JSON.stringify(data.error);
-                    const lowerErrMsg = errMsg.toLowerCase();
-                    if (lowerErrMsg.includes("is not found") && lowerErrMsg.includes("models/")) {
-                        throw new Error("Model AI usang! Buka Google Apps Script Anda, ganti 'gemini-1.5-flash' menjadi 'gemini-2.5-flash', lalu Deploy Ulang.");
-                    } else if (lowerErrMsg.includes("urlfetchapp.fetch") || lowerErrMsg.includes("otorisasi") || lowerErrMsg.includes("script.external_request")) {
-                        throw new Error("Otorisasi Backend Diperlukan! Buka Apps Script Anda, jalankan fungsi manual, izinkan, lalu Deploy Ulang.");
-                    } else if (lowerErrMsg.includes("quota") || lowerErrMsg.includes("kuota") || lowerErrMsg.includes("bandwidth") || lowerErrMsg.includes("terlampaui") || lowerErrMsg.includes("429") || lowerErrMsg.includes("503") || lowerErrMsg.includes("high demand")) {
-                        throw new Error("QUOTA_EXCEEDED");
-                    }
-                    throw new Error(errMsg);
-                }
-
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-                    throw new Error("Google Apps Script mengembalikan format data yang tidak dikenali.");
-                }
-                return data;
-
-            } catch (error) {
-                lastErrorMessage = error.message;
-                const lowerLastErr = lastErrorMessage.toLowerCase();
-                
-                if (lastErrorMessage === "QUOTA_EXCEEDED" || lowerLastErr.includes("quota") || lowerLastErr.includes("kuota") || lowerLastErr.includes("bandwidth") || lowerLastErr.includes("terlampaui") || lowerLastErr.includes("429")) {
-                    console.warn("GAS Quota Exceeded. Mengalihkan ke Fallback Canvas...");
-                    return await fallbackAPI();
-                }
-
-                if (lastErrorMessage.includes("Otorisasi Backend Diperlukan") || lastErrorMessage.includes("Model AI usang")) {
-                    throw error;
-                }
-                
-                if (i === 4) {
-                    console.warn("Gagal menghubungi GAS, beralih ke Fallback Canvas...");
-                    return await fallbackAPI();
-                }
-                await new Promise(resolve => setTimeout(resolve, delays[i]));
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
+            });
+            
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+            
+            const data = await response.json();
+            
+            if (data.error && !data.candidates) {
+                let errMsg = data.error.message || JSON.stringify(data.error);
+                throw new Error(errMsg);
             }
+            
+            return data;
+        } catch (error) {
+            console.error("Fetch AI Error:", error);
+            throw error;
         }
     }
 
@@ -1146,18 +1088,13 @@
             let optimizedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (optimizedText) {
                 element.value = optimizedText.trim().replace(/^"|"$/g, '').trim();
-                window.showToast(`${fieldName} dioptimalkan!`);
+                window.showToast(`${fieldName.toUpperCase()} berhasil dioptimalkan!`, false);
             } else {
                 throw new Error("Respon AI kosong.");
             }
         } catch (error) {
             console.error("Optimize Error:", error);
-            let errMsg = error.message.toLowerCase();
-            if (errMsg.includes("quota") || errMsg.includes("kuota") || errMsg.includes("sibuk")) {
-                window.showToast(`Server AI sibuk. Silakan coba beberapa saat lagi.`, true);
-            } else {
-                window.showToast(`Gagal mengoptimalkan. (${error.message}).`, true);
-            }
+            window.showToast(`Gagal mengoptimalkan: ${error.message}`, true);
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalBtnHTML;
@@ -1285,29 +1222,15 @@
             }
         } catch (error){
             console.error("Generate Error:", error);
-            let errorMessage = "Gagal terhubung ke server. " + (error.message || "");
-
-            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("kuota") || errorMessage.toLowerCase().includes("sibuk")) {
-               window.showToast("Server AI sedang sibuk. Kuota tercapai. Silakan coba sesaat lagi.", true);
-               scriptBox.innerHTML = `
-                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    Server Google sedang penuh antrean atau kuota habis.<br>
-                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 1 menit lalu coba lagi.</span>
-                </div>`;
-            } else {
-                scriptBox.innerHTML = `
-                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    Terjadi kesalahan teknis.<br>
-                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Detail: ${errorMessage}</span>
-                </div>`;
-                window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
-            }
+            scriptBox.innerHTML = `
+            <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Terjadi kesalahan teknis atau Server AI sedang sibuk.<br>
+                <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Detail: ${error.message}</span>
+            </div>`;
+            window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
         } finally {
             btn.disabled = false;
             loader.classList.add('hidden');
