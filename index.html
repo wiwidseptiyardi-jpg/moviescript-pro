@@ -13,15 +13,16 @@
             background-color: #f3f4f6;
         }
         
+        /* STANDAR FORMAT NASKAH HOLLYWOOD COURIER PRIME */
         .script-font {
             font-family: 'Courier Prime', monospace;
             line-height: 1.2; 
         }
         .script-page {
             background: white;
-            width: 210mm;
+            width: 210mm; /* Kertas A4 */
             min-height: 297mm; 
-            padding: 2.54cm; 
+            padding: 2.54cm; /* Margin Preview Web Seragam */
             margin: 0 auto 2rem auto; 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             color: #000;
@@ -30,7 +31,9 @@
             box-sizing: border-box;
         }
 
+        /* --- MODE KHUSUS PDF (ANTI POTONG & TATA LETAK MENGALIR ALAMI) --- */
         .pdf-download-mode {
+            /* Lebar Kertas A4 (210) dikurangi Margin Kiri (25.4) & Margin Kanan (25.4) = 159.2mm */
             width: 159.2mm !important; 
             max-width: 159.2mm !important;
             margin: 0 !important;
@@ -44,6 +47,7 @@
             margin: 0 !important;
             padding: 0 !important;
             box-shadow: none !important;
+            /* Membiarkan tinggi berjalan alami agar tidak ada ruang kosong yang bentrok dengan margin */
             min-height: auto !important;
             height: auto !important; 
         }
@@ -53,11 +57,14 @@
             display: block;
         }
 
+        /* Memaksa elemen baris pertama di halaman naskah (Halaman 2) untuk mutlak menempel di atas */
         #scriptContent > div:first-child {
             margin-top: 0 !important;
             padding-top: 0 !important;
         }
         
+        /* ALIGNMENT & SPACING ELEMENT NASKAH (STANDAR HOLLYWOOD) */
+        /* Penambahan 'page-break-inside: avoid' mutlak agar teks tidak terpotong di batas bawah */
         .scene-heading, .action-line, .character-name, .parenthetical, .dialogue {
             page-break-inside: avoid !important;
         }
@@ -119,6 +126,7 @@
 </head>
 <body class="bg-slate-100 min-h-screen relative">
 
+<!-- AUTHENTICATION CONTAINER -->
 <div id="authContainer" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-700 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.98)), url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=2070&auto=format&fit=crop');">
     <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 
@@ -138,6 +146,7 @@
             <p class="text-[9px] text-cyan-100/60 uppercase tracking-[0.25em] mt-2">Aplikasi Pembuat Naskah Film Otomatis</p>
         </div>
 
+        <!-- LOGIN VIEW -->
         <div id="loginView" class="block relative z-10">
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-cyan-500 rounded-sm shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span> LOGIN PREMIUM
@@ -172,6 +181,7 @@
             </div>
         </div>
 
+        <!-- GUEST VIEW (TRIAL MODE) -->
         <div id="guestView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
                 <span class="w-1.5 h-4 bg-green-500 rounded-sm shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> AKSES TAMU
@@ -192,6 +202,7 @@
             </p>
         </div>
 
+        <!-- SIGNUP VIEW -->
         <div id="signupView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-purple-500 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span> REGISTRASI PREMIUM
@@ -224,6 +235,7 @@
             </p>
         </div>
 
+        <!-- FORGOT PASSWORD VIEW (RESET PASSWORD) -->
         <div id="forgotView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
                 <span class="w-1.5 h-4 bg-yellow-500 rounded-sm shadow-[0_0_8px_rgba(234,179,8,0.8)]"></span> RESET PASSWORD
@@ -246,6 +258,7 @@
     </div>
 </div>
 
+<!-- UPGRADE MODAL -->
 <div id="qrisModal" class="fixed inset-0 z-[150] bg-slate-900/80 backdrop-blur-sm hidden flex justify-center items-center p-4 transition-opacity">
     <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
         <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-5 text-center relative">
@@ -260,7 +273,7 @@
                 
                 <!-- GAMBAR QRIS -->
                 <div class="bg-white p-2 rounded-xl inline-block shadow-sm border border-slate-200 mb-2">
-                    <img src="https://i.ibb.co.com/Ng8hKp9C/Screenshot-2026-04-27-194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
+                    <img src="Screenshot 2026-04-27 194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
                 </div>
                 
                 <p class="text-[10px] text-slate-500 mt-1 font-medium">Scan QRIS di atas, lalu kirim bukti pembayaran ke Admin untuk mendapatkan kode akses.</p>
@@ -277,6 +290,7 @@
     </div>
 </div>
 
+<!-- MAIN APP CONTAINER -->
 <div id="appContainer" class="hidden">
     <nav class="bg-slate-900 text-white p-4 shadow-xl sticky top-0 z-40">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -292,10 +306,12 @@
             <div class="flex items-center gap-4 text-[10px] text-slate-300 font-mono uppercase">
                 <span id="userDisplay" class="font-bold text-blue-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden md:inline-block"></span>
                 
+                <!-- PREMIUM BADGE -->
                 <span id="premiumBadge" class="hidden font-bold text-yellow-400 bg-yellow-900/40 px-3 py-1 rounded-full border border-yellow-700">
                     AKUN PREMIUM
                 </span>
 
+                <!-- TOKEN BADGE (Khusus Tamu) -->
                 <span id="tokenBadge" class="hidden font-bold text-green-400 bg-green-900/40 px-3 py-1 rounded-full border border-green-700">
                     Sisa Token: <span id="tokenCountText">3</span>
                 </span>
@@ -543,16 +559,23 @@
             <div class="overflow-y-auto bg-slate-300 p-4 border-x border-b border-slate-300 h-full">
                 <div id="printArea">
                     
+                    <!-- TATA LETAK COVER BARU (MENGALIR ALAMI SESUAI PERMINTAAN) -->
                     <div id="titlePage" class="script-page script-font">
                         <div class="title-page-container">
+                            
+                            <!-- BAGIAN ATAS: Menempel mutlak di garis margin 0 atas tanpa rongga -->
                             <div style="width: 100%; text-align: center; margin: 0; padding: 0;"> 
                                 <h1 id="dispTitle" style="font-size: 24pt; font-weight: bold; text-transform: uppercase; margin: 0; padding: 0; line-height: 1;">JUDUL FILM</h1>
                                 <p style="margin: 20px 0 5px 0; padding: 0; font-size: 12pt;">By</p>
                                 <p id="dispAuthor" style="font-weight: bold; margin: 0; padding: 0; font-size: 12pt;">Nama Penulis</p>
                             </div>
+                            
+                            <!-- BAGIAN TENGAH -->
                             <div style="width: 100%; text-align: center; margin-top: 100px;">
                                 <p id="dispDraftInfo" style="font-style: italic; margin: 0; padding: 0; font-size: 12pt;">#DRAFT 1: [Tanggal]</p>
                             </div>
+
+                            <!-- BAGIAN BAWAH -->
                             <div style="width: 100%; font-size: 12pt; margin-top: 150px;">
                                 <div style="float: left; text-align: left;">
                                     <p id="dispProd" style="text-transform: uppercase; font-weight: bold; margin: 0; padding: 0;">RUMAH PRODUKSI</p>
@@ -563,6 +586,7 @@
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
+
                         </div>
                     </div>
 
@@ -577,23 +601,18 @@
         </div>
     </main>
 </div>
-
-<div id="historyModal" class="fixed inset-0 z-[110] bg-slate-900/60 hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
-    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col transform transition-transform overflow-hidden max-h-[85vh]">
-        <div class="p-6 border-b border-slate-100 relative">
-            <button onclick="closeHistoryModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition font-bold p-1 text-xl">✕</button>
-            <div class="flex items-center gap-2 mb-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h2 class="text-xl font-bold text-slate-800">Riwayat Naskah</h2>
+<div id="historyModal" class="fixed inset-0 z-[110] bg-slate-900/60 hidden flex justify-end transition-opacity backdrop-blur-sm">
+    <div class="bg-slate-100 w-full max-w-md h-full shadow-2xl flex flex-col transform transition-transform border-l border-slate-300">
+        <div class="p-5 bg-slate-900 text-white flex justify-between items-center shadow-md z-10">
+            <h2 class="font-bold tracking-wide flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg> Riwayat Naskah Anda
+            </h2>
+            <button onclick="closeHistoryModal()" class="hover:text-red-400 transition font-bold p-1 text-lg">✕</button>
+        </div>
+        <div id="historyList" class="p-5 overflow-y-auto flex-1 space-y-4">
             </div>
-            <p class="text-[10px] font-bold text-slate-500 tracking-wider uppercase ml-8 mt-1">
-                KUOTA PENYIMPANAN: <span id="quotaCount" class="text-emerald-500">0</span> / 10 NASKAH
-            </p>
-        </div>
-        <div id="historyList" class="p-6 overflow-y-auto flex-1 space-y-3 bg-slate-50/50">
-        </div>
     </div>
 </div>
 
@@ -602,20 +621,25 @@
 </div>
 
 <script type="module">
+    // ==========================================
+    // IMPORTS & SETUP FIREBASE
+    // ==========================================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+    // PENTING: Ganti dengan URL Google Apps Script Anda
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKDubAgUlYyXL5kdda0z4qTSeReuuScmUas2jKIFfkDanNopuaGzUHeoH7KJaoEgT-RA/exec";
 
+    // PENTING: MASUKKAN API KEY FIREBASE ANDA DI SINI UNTUK MENGHINDARI ERROR LOGIN
     const firebaseConfig = {
-      apiKey: "AIzaSyBv2W26CoAOpxqFD0te83GoUm6sh5bQ3ro",
-      authDomain: "movie-script-925d3.firebaseapp.com",
-      projectId: "movie-script-925d3",
-      storageBucket: "movie-script-925d3.firebasestorage.app",
-      messagingSenderId: "405897726844",
-      appId: "1:405897726844:web:78539bbcdcaefe2477b2f9"
-    };
+  apiKey: "AIzaSyBv2W26CoAOpxqFD0te83GoUm6sh5bQ3ro",
+  authDomain: "movie-script-925d3.firebaseapp.com",
+  projectId: "movie-script-925d3",
+  storageBucket: "movie-script-925d3.firebasestorage.app",
+  messagingSenderId: "405897726844",
+  appId: "1:405897726844:web:78539bbcdcaefe2477b2f9"
+};
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -624,17 +648,11 @@
     let characterCount = 0;
     let currentUser = null;
     let currentCustomEmail = null;
-    let currentHistoryData = []; 
-    let currentGeneratedScript = null; 
-    
-    let isGuestMode = false;
-    let guestTokenCount = 0;
 
     onAuthStateChanged(auth, async (user) => {
         currentUser = user;
-        if (user && !user.isAnonymous) {
+        if (user) {
             currentCustomEmail = user.email;
-            isGuestMode = false;
         }
     });
 
@@ -649,32 +667,14 @@
             toast.classList.add('bg-slate-900');
         }
         toast.style.opacity = '1';
-        setTimeout(() => toast.style.opacity = '0', 4500);
+        setTimeout(() => toast.style.opacity = '0', 3500);
     }
 
     window.switchView = function(viewId) {
         document.getElementById('loginView').classList.add('hidden');
         document.getElementById('signupView').classList.add('hidden');
         document.getElementById('forgotView').classList.add('hidden');
-        document.getElementById('guestView').classList.add('hidden');
         document.getElementById(viewId).classList.remove('hidden');
-        
-        document.getElementById('resetSuccessMsg').classList.add('hidden');
-        document.getElementById('forgotInstruction').classList.remove('hidden');
-    }
-
-    window.openQrisModal = function() {
-        document.getElementById('qrisModal').classList.remove('hidden');
-        setTimeout(() => {
-            document.querySelector('#qrisModal > div').classList.remove('scale-95');
-        }, 10);
-    }
-
-    window.closeQrisModal = function() {
-        document.querySelector('#qrisModal > div').classList.add('scale-95');
-        setTimeout(() => {
-            document.getElementById('qrisModal').classList.add('hidden');
-        }, 300);
     }
 
     window.resetWorkspace = function() {
@@ -698,124 +698,27 @@
         document.getElementById('scriptContent').classList.add('hidden');
         document.getElementById('placeholderState').classList.remove('hidden');
         document.getElementById('durationTag').classList.add('hidden');
-        document.getElementById('btnSaveScript').classList.add('hidden');
-        currentGeneratedScript = null;
         
         document.getElementById('title').value = '';
         window.updateTitlePage();
     }
 
-    window.loginSuccess = function(email, isGuest = false) {
+    window.loginSuccess = function(email) {
         currentCustomEmail = email; 
-        isGuestMode = isGuest;
-        
         document.getElementById('authContainer').classList.add('opacity-0');
+        
         window.resetWorkspace();
         
         setTimeout(() => {
             document.getElementById('authContainer').classList.add('hidden');
             document.getElementById('appContainer').classList.remove('hidden');
-            document.getElementById('userDisplay').innerText = isGuest ? `Tamu: ${email}` : email;
-            
-            if (isGuest) {
-                document.getElementById('tokenBadge').classList.remove('hidden');
-                document.getElementById('tokenCountText').innerText = guestTokenCount;
-                document.getElementById('premiumBadge').classList.add('hidden');
-                document.getElementById('btnNewProject').classList.add('hidden');
-                document.getElementById('btnHistory').classList.add('hidden');
-                document.getElementById('btnUpgrade').classList.remove('hidden');
-            } else {
-                document.getElementById('tokenBadge').classList.add('hidden');
-                document.getElementById('premiumBadge').classList.remove('hidden');
-                document.getElementById('btnNewProject').classList.remove('hidden');
-                document.getElementById('btnHistory').classList.remove('hidden');
-                document.getElementById('btnUpgrade').classList.add('hidden');
-            }
+            document.getElementById('userDisplay').innerText = email;
             
             document.getElementById('date').valueAsDate = new Date();
             window.updateTitlePage();
             
-            window.showToast(isGuest ? `Masuk sebagai tamu. Anda punya ${guestTokenCount} token percobaan.` : "Berhasil masuk!", false);
+            window.showToast("Berhasil masuk!", false);
         }, 300);
-    }
-
-    window.handleGuestLogin = async function(e) {
-        e.preventDefault();
-        const email = document.getElementById('guestEmail').value.trim().toLowerCase();
-        const btn = document.getElementById('btnGuest');
-        const loader = document.getElementById('guestLoader');
-        
-        if (!email) return;
-
-        const claimedEmail = localStorage.getItem('ms_device_guest_email');
-        if (claimedEmail && claimedEmail !== email) {
-            window.showToast(`Anda sudah mencoba dengan email tamu ${claimedEmail}. Jika ingin mencoba sepuasnya bisa memakai akun premium. Terimakasih`, true);
-            return;
-        }
-        
-        btn.disabled = true;
-        loader.classList.remove('hidden');
-
-        try {
-            await signInAnonymously(auth);
-            
-            const docRef = doc(db, 'guestTokens', email);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                guestTokenCount = docSnap.data().tokens;
-                localStorage.setItem('ms_device_guest_email', email);
-
-                if (guestTokenCount <= 0) {
-                    window.showToast("Token percobaan Anda sudah habis.", true);
-                    openQrisModal();
-                    await signOut(auth);
-                    return;
-                }
-            } else {
-                guestTokenCount = 3;
-                await setDoc(docRef, { 
-                    email: email,
-                    tokens: 3, 
-                    createdAt: new Date().toISOString(),
-                    userAgent: navigator.userAgent 
-                });
-                localStorage.setItem('ms_device_guest_email', email);
-            }
-
-            window.loginSuccess(email, true);
-
-        } catch (error) {
-            console.error(error);
-            window.showToast("Gagal masuk mode tamu: " + error.message, true);
-        } finally {
-            btn.disabled = false;
-            loader.classList.add('hidden');
-        }
-    }
-
-    // FUNGSI CEK TOKEN: Mengecek dan memvalidasi sisa token
-    function hasEnoughToken() {
-        if (!isGuestMode) return true;
-        
-        if (guestTokenCount <= 0) {
-            openQrisModal();
-            return false;
-        }
-        return true;
-    }
-
-    // FUNGSI POTONG TOKEN: Memotong token HANYA JIKA AI berhasil dijalankan
-    async function consumeToken() {
-        if (!isGuestMode) return;
-        try {
-            const docRef = doc(db, 'guestTokens', currentCustomEmail);
-            guestTokenCount--;
-            await setDoc(docRef, { tokens: guestTokenCount, lastUsed: new Date().toISOString() }, { merge: true });
-            document.getElementById('tokenCountText').innerText = guestTokenCount;
-        } catch (error) {
-            console.error("Gagal memotong token:", error);
-        }
     }
 
     window.handleLogin = async function(e) {
@@ -829,8 +732,9 @@
         const email = document.getElementById('loginEmail').value;
         const pass = document.getElementById('loginPass').value;
         
+        // Bypass Admin
         if (email === "admin@moviescript.ai" && pass === "admin") {
-            window.loginSuccess(email, false);
+            window.loginSuccess(email);
             btnLogin.disabled = false;
             loader.classList.add('hidden');
             return;
@@ -838,9 +742,16 @@
 
         try {
             await signInWithEmailAndPassword(auth, email, pass);
-            window.loginSuccess(email, false);
+            window.loginSuccess(email);
         } catch (error) {
-            window.showToast("Email belum terdaftar atau password salah!", true);
+            console.warn("Login Note:", error.message);
+            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                window.showToast("Email atau password salah!", true);
+            } else if (error.code === 'auth/api-key-not-valid') {
+                window.showToast("API Key Firebase tidak valid. Harap perbarui kode Anda.", true);
+            } else {
+                window.showToast("Gagal login: " + error.message, true);
+            }
         } finally {
             btnLogin.disabled = false;
             loader.classList.add('hidden');
@@ -864,6 +775,13 @@
         btnSignup.disabled = true;
         loader.classList.remove('hidden');
 
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI") {
+            window.showToast("Sistem Pendaftaran belum siap. Hubungi Admin.", true);
+            btnSignup.disabled = false;
+            loader.classList.add('hidden');
+            return;
+        }
+
         try {
             const verifyResponse = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -873,23 +791,38 @@
             const verifyData = await verifyResponse.json();
 
             if (!verifyData.valid) {
-                window.showToast("Kode Akses tidak valid!", true);
+                window.showToast("Kode Akses tidak valid atau salah!", true);
                 btnSignup.disabled = false;
                 loader.classList.add('hidden');
                 return;
             }
-
+        } catch (err) {
+            console.warn("Verifikasi Note:", err.message);
+            window.showToast("Gagal memverifikasi kode ke server.", true);
+            btnSignup.disabled = false;
+            loader.classList.add('hidden');
+            return;
+        }
+        
+        try {
+            // 1. Daftarkan dan otentikasi user
             await createUserWithEmailAndPassword(auth, email, pass);
+
+            // PERBAIKAN KEAMANAN: Jangan Sign-out dulu! Kita butuh status 'Login' untuk menulis ke Database
             const uniqueId = 'MSP-' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+            const currentDate = new Date().toISOString();
+
+            // 2. Tulis data ke Firestore (Hanya menyimpan email, JANGAN menyimpan password di database!)
             const usersRef = collection(db, 'registeredUsers');
             await addDoc(usersRef, {
                 uid: uniqueId,
                 email: email,
-                createdAt: new Date().toISOString()
+                createdAt: currentDate
             });
 
+            // 3. Setelah database berhasil ditulis dengan aman, BARU kita Sign-out
             await signOut(auth);
-            
+
             try {
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
@@ -897,17 +830,28 @@
                     body: JSON.stringify({ 
                         action: 'register',
                         id: uniqueId,
-                        tanggal: new Date().toLocaleString('id-ID'), 
+                        tanggal: new Date(currentDate).toLocaleString('id-ID'), 
                         email: email, 
                         password: pass 
                     })
                 });
-            } catch(e){}
+            } catch (sheetError) {
+                console.warn("Gagal merekap ke Google Sheets:", sheetError.message);
+            }
             
-            window.showToast("Berhasil registrasi! Silakan login.", false);
+            window.showToast("Data pendaftaran berhasil disimpan!", false);
+            document.getElementById('signupForm').reset();
             window.switchView('loginView');
+
         } catch (error) {
-            window.showToast("Gagal menyimpan data: " + error.message, true);
+            console.warn("Signup Note:", error.message);
+            if (error.code === 'auth/email-already-in-use') {
+                window.showToast("Email sudah terdaftar, silakan login!", true);
+            } else if (error.code === 'auth/api-key-not-valid') {
+                window.showToast("API Key Firebase tidak valid. Harap perbarui kode Anda.", true);
+            } else {
+                window.showToast("Gagal menyimpan data: " + error.message, true);
+            }
         } finally {
             btnSignup.disabled = false;
             loader.classList.add('hidden');
@@ -920,39 +864,55 @@
         const btnSubmit = document.querySelector('#forgotForm button[type="submit"]');
         
         if (!email) {
-            window.showToast("Masukkan email Anda!", true);
+            window.showToast("Masukkan alamat email Anda!", true);
             return;
         }
 
         btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<div class="loader !w-4 !h-4 !border-2"></div> MENGIRIM...';
+        
         try {
             await sendPasswordResetEmail(auth, email);
-            document.getElementById('resetSuccessMsg').classList.remove('hidden');
-            document.getElementById('forgotInstruction').classList.add('hidden');
+            window.showToast(`Tautan reset password telah dikirim ke email: ${email}`, false);
+            document.getElementById('forgotForm').reset();
             
-            window.showToast(`Tautan reset password telah dikirim ke email Anda.`, false);
+            setTimeout(() => {
+                window.switchView('loginView');
+            }, 3000);
         } catch (error) {
-            window.showToast("Gagal mengirim email reset sandi.", true);
+            console.warn("Forgot Password Note:", error.message);
+            if (error.code === 'auth/user-not-found') {
+                window.showToast("Email tidak ditemukan di sistem kami.", true);
+            } else if (error.code === 'auth/api-key-not-valid') {
+                window.showToast("API Key Firebase tidak valid. Harap perbarui kode Anda.", true);
+            } else {
+                window.showToast("Gagal mengirim email reset sandi.", true);
+            }
         } finally {
             btnSubmit.disabled = false;
+            btnSubmit.innerHTML = 'KIRIM PROTOKOL';
         }
     }
 
     window.handleLogout = async function() {
         try {
             await signOut(auth); 
-            currentCustomEmail = null;
-            isGuestMode = false; 
+            currentCustomEmail = null; 
             document.getElementById('appContainer').classList.add('hidden');
             document.getElementById('authContainer').classList.remove('hidden');
-            document.getElementById('premiumBadge').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+            
             window.resetWorkspace();
+            
             setTimeout(() => {
                 document.getElementById('authContainer').classList.remove('opacity-0');
-                window.switchView('loginView');
             }, 50);
-            window.showToast("Berhasil keluar.", false);
-        } catch (e){}
+            
+            window.showToast("Anda telah keluar.", false);
+        } catch (error) {
+            console.warn("Logout Note:", error.message);
+            window.showToast("Gagal keluar aplikasi.", true);
+        }
     }
 
     window.toggleCustom = function(selectId, inputId) {
@@ -972,7 +932,12 @@
         const dateInput = document.getElementById('date').value;
         const prod = document.getElementById('productionHouse').value || "RUMAH PRODUKSI";
         const contact = document.getElementById('contact').value || "Kontak";
-        let year = dateInput ? new Date(dateInput).getFullYear() : new Date().getFullYear();
+
+        let year = new Date().getFullYear();
+        if (dateInput) {
+            year = new Date(dateInput).getFullYear();
+        }
+
         document.getElementById('dispTitle').innerText = title.toUpperCase();
         document.getElementById('dispAuthor').innerText = author;
         document.getElementById('dispDraftInfo').innerText = `#${draft.toUpperCase()}: ${dateInput}`;
@@ -985,22 +950,38 @@
         characterCount++;
         const list = document.getElementById('characterList');
         const card = document.createElement('div');
-        card.className = "character-card p-4 border border-slate-200 rounded-xl bg-slate-50 space-y-3 relative transition-all hover:border-blue-300";
+        card.className = "character-card p-4 border border-slate-200 rounded-xl bg-slate-50 space-y-3 relative group transition-all hover:border-blue-300 hover:shadow-md";
         card.id = `char-${characterCount}`;
+        
         card.innerHTML = `
-            ${!isPrimary ? `<button onclick="window.removeCharacter(${characterCount})" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition text-sm">✕</button>` : ''}
+            ${!isPrimary ? `<button onclick="window.removeCharacter(${characterCount})" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition text-sm z-20">✕</button>` : ''}
             <div class="flex items-center gap-2 mb-2">
                 <select class="role-type text-[9px] font-black uppercase p-1.5 rounded bg-white border border-slate-200 shadow-sm">
                     <option value="Utama" ${isPrimary ? 'selected' : ''}>UTAMA</option>
                     <option value="Pembantu">PEMBANTU</option>
                 </select>
-                <input type="text" class="char-name flex-1 text-sm font-bold bg-transparent border-b border-slate-300 outline-none uppercase" placeholder="NAMA KARAKTER">
+                <input type="text" class="char-name flex-1 text-sm font-bold bg-transparent border-b border-slate-300 outline-none focus:border-blue-500 uppercase placeholder:normal-case placeholder:font-normal" placeholder="NAMA KARAKTER">
             </div>
             <div class="grid grid-cols-2 gap-2">
-                <input type="text" class="char-age text-xs p-2 bg-white rounded border border-slate-200" placeholder="Umur">
-                <input type="text" class="char-physical text-xs p-2 bg-white rounded border border-slate-200" placeholder="Fisik">
+                <div class="flex flex-col gap-1">
+                    <label class="text-[9px] font-bold text-slate-400 ml-1">UMUR</label>
+                    <input type="text" class="char-age text-xs p-2 bg-white rounded border border-slate-200 focus:border-blue-400 outline-none" placeholder="Contoh: 28th">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[9px] font-bold text-slate-400 ml-1">FISIK</label>
+                    <input type="text" class="char-physical text-xs p-2 bg-white rounded border border-slate-200 focus:border-blue-400 outline-none" placeholder="TB, Rambut, dsb">
+                </div>
             </div>
-            <textarea id="char-bg-${characterCount}" class="char-background text-xs w-full p-2 bg-white rounded border border-slate-200" rows="2" placeholder="Latar Belakang..."></textarea>
+            <div class="space-y-2">
+                <input type="text" class="char-traits text-xs w-full p-2 bg-white rounded border border-slate-200 focus:border-blue-400 outline-none" placeholder="Sifat & Kepribadian">
+                <input type="text" class="char-unique text-xs w-full p-2 bg-white rounded border border-slate-200 focus:border-blue-400 outline-none" placeholder="Karakter Unik / Kebiasaan">
+                
+                <div class="flex justify-between items-end mt-2 mb-1">
+                    <label class="text-[9px] font-bold text-slate-400 ml-1 block">LATAR BELAKANG</label>
+                    <button type="button" id="btn-opt-char-bg-${characterCount}" onclick="window.optimizeField('char-bg-${characterCount}', 'latar belakang karakter')" class="text-[9px] bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 px-2 py-0.5 rounded flex items-center gap-1 font-bold transition shadow-sm" title="Perdalam profil karakter dengan AI">✨ AI Optimize</button>
+                </div>
+                <textarea id="char-bg-${characterCount}" class="char-background text-xs w-full p-2 bg-white rounded border border-slate-200 focus:border-blue-400 outline-none" rows="3" placeholder="Ide kasar Latar Belakang Keluarga & Masa Lalu..."></textarea>
+            </div>
         `;
         list.appendChild(card);
     }
@@ -1009,7 +990,7 @@
         document.getElementById(`char-${id}`).remove();
     }
 
-    // FUNGSI API YANG DISEDERHANAKAN AGAR BERJALAN LANCAR DI VERCEL
+    // FUNGSI API (Hanya Mengandalkan Google Apps Script Tanpa Redireksi)
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
 
@@ -1035,22 +1016,25 @@
             
             return data;
         } catch (error) {
-            console.error("Fetch AI Error:", error);
+            console.warn("Fetch AI Note:", error.message);
             throw error;
         }
     }
 
     window.optimizeField = async function(elementId, fieldName) {
-        if (!hasEnoughToken()) return; // Mengecek apakah punya token sebelum mulai
-        
         const element = document.getElementById(elementId);
+        if (!element) return;
         const originalText = element.value.trim();
-        if (!originalText) return window.showToast(`Tulis ide awal ${fieldName} dulu!`, true);
+
+        if (!originalText) {
+            window.showToast(`Tuliskan sedikit ide awal untuk ${fieldName} terlebih dahulu!`, true);
+            return;
+        }
 
         const btn = document.getElementById(`btn-opt-${elementId}`);
         const originalBtnHTML = btn.innerHTML;
         btn.disabled = true;
-        btn.innerHTML = `<span class="animate-spin inline-block">⏳</span>`;
+        btn.innerHTML = `<svg class="animate-spin h-3 w-3 mr-1 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> AI...`;
 
         const genre = document.getElementById('genre').value || "Umum";
         const theme = document.getElementById('theme').value || "Bebas";
@@ -1081,15 +1065,20 @@
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
             let optimizedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (optimizedText) {
-                element.value = optimizedText.trim().replace(/^"|"$/g, '').trim();
+                optimizedText = optimizedText.trim().replace(/^"|"$/g, '').trim();
+                element.value = optimizedText;
                 window.showToast(`${fieldName.toUpperCase()} berhasil dioptimalkan!`, false);
-                await consumeToken(); // Token baru dipotong jika AI SUKSES memberikan respons
             } else {
                 throw new Error("Respon AI kosong.");
             }
         } catch (error) {
-            console.error("Optimize Error:", error);
-            window.showToast(`Gagal mengoptimalkan: ${error.message}`, true);
+            console.warn("Optimize AI Note:", error.message);
+            let errorMessage = error.message || "";
+            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("exceeded") || errorMessage.toLowerCase().includes("limit: 20")) {
+               window.showToast("Batas limit AI tercapai. Mohon tunggu sekitar 15-30 detik.", true);
+            } else {
+               window.showToast(`Gagal mengoptimalkan: ${error.message}`, true);
+            }
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalBtnHTML;
@@ -1098,33 +1087,20 @@
 
     window.generateScript = async function() {
         const title = document.getElementById('title').value;
-        const premise = document.getElementById('premise').value;
-        if (!title || !premise) return window.showToast("Lengkapi Judul dan Premis!", true);
-
-        const characters = [];
-        document.querySelectorAll('.character-card').forEach(card => {
-            const charName = card.querySelector('.char-name').value;
-            if(charName.trim() !== "") {
-                characters.push({ name: charName });
-            }
-        });
-
-        if (characters.length === 0) {
-            window.showToast("Harap lengkapi minimal satu Karakter yang memiliki nama.", true);
-            return;
-        }
-
-        if (!hasEnoughToken()) return; // Mengecek apakah punya token sebelum mulai
-
         const targetDuration = document.getElementById('duration').value;
         const genre = document.getElementById('genre').value;
+        const premise = document.getElementById('premise').value;
         const synopsis = document.getElementById('synopsis').value;
         
         let timeSetting = document.getElementById('timeSetting').value;
-        if(timeSetting === "Lainnya") timeSetting = document.getElementById('customTimeInput').value || "Bebas";
+        if(timeSetting === "Lainnya") {
+             timeSetting = document.getElementById('customTimeInput').value || "Bebas";
+        }
 
         let placeSetting = document.getElementById('placeSetting').value;
-        if(placeSetting === "Lainnya") placeSetting = document.getElementById('customPlaceInput').value || "Bebas";
+        if(placeSetting === "Lainnya") {
+             placeSetting = document.getElementById('customPlaceInput').value || "Bebas";
+        }
 
         const theme = document.getElementById('theme').value || "Bebas";
         const endingType = document.getElementById('endingType').value;
@@ -1132,6 +1108,27 @@
         const plotConflict = document.getElementById('plotConflict').value;
         const plotClimax = document.getElementById('plotClimax').value;
         const plotResolution = document.getElementById('plotResolution').value;
+
+        const characters = [];
+        document.querySelectorAll('.character-card').forEach(card => {
+            const charName = card.querySelector('.char-name').value;
+            if(charName.trim() !== "") {
+                characters.push({
+                    role: card.querySelector('.role-type').value,
+                    name: charName,
+                    age: card.querySelector('.char-age').value,
+                    physical: card.querySelector('.char-physical').value,
+                    traits: card.querySelector('.char-traits').value,
+                    unique: card.querySelector('.char-unique').value,
+                    background: card.querySelector('.char-background').value
+                });
+            }
+        });
+
+        if (!title || !premise || characters.length === 0) {
+            window.showToast("Harap lengkapi Judul, Premis, dan minimal satu Karakter yang memiliki nama.", true);
+            return;
+        }
 
         const btn = document.getElementById('generateBtn');
         const loader = document.getElementById('btnLoader');
@@ -1141,16 +1138,17 @@
         btn.disabled = true;
         loader.classList.remove('hidden');
         placeholder.classList.add('hidden');
-        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader mb-4"></div><p class="text-slate-500 font-semibold">AI sedang merangkai adegan dan dialog...</p></div>`;
+        scriptBox.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-40">
+                <div class="loader mb-4"></div>
+                <p class="text-slate-500 text-sm font-semibold">AI sedang merangkai adegan dan dialog...</p>
+                <p class="text-slate-400 text-xs mt-2">Mohon tunggu sebentar.</p>
+            </div>`;
         scriptBox.classList.remove('hidden');
 
-        const charPrompt = [];
-        document.querySelectorAll('.character-card').forEach(card => {
-            const charName = card.querySelector('.char-name').value;
-            if(charName.trim() !== "") {
-                charPrompt.push(`- NAMA: ${charName} (${card.querySelector('.role-type').value})\n  Umur: ${card.querySelector('.char-age').value}\n  Fisik: ${card.querySelector('.char-physical').value}\n  Sifat: ${card.querySelector('.char-traits').value}\n  Latar Belakang: ${card.querySelector('.char-background').value}`);
-            }
-        });
+        const charPrompt = characters.map(c => 
+            `- NAMA: ${c.name} (${c.role})\n  Umur: ${c.age}\n  Fisik: ${c.physical}\n  Sifat: ${c.traits}\n  Ciri Unik: ${c.unique}\n  Latar Belakang: ${c.background}`
+        ).join('\n\n');
 
         let plotStructure = "Ikuti alur cerita yang logis dari awal hingga akhir.";
         if (plotIntro || plotConflict || plotClimax || plotResolution) {
@@ -1194,41 +1192,55 @@
         ${plotStructure}
 
         DAFTAR KARAKTER:
-        ${charPrompt.join('\n\n')}`;
+        ${charPrompt}`;
 
         try {
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
             const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
             if (text) {
                 const formattedHTML = formatScriptToHTML(text);
                 scriptBox.innerHTML = formattedHTML;
-                const words = text.split(/\s+/).length;
-                const wordCount = Math.ceil(words / 150);
+                
+                const words = text.trim().split(/\s+/).length;
+                const wordCount = Math.max(1, Math.ceil(words / 150));
                 document.getElementById('durValue').innerText = wordCount;
                 document.getElementById('durationTag').classList.remove('hidden');
                 
-                currentGeneratedScript = { title, genre, scriptHTML: formattedHTML, wordCount };
-                if (currentUser && !isGuestMode) {
-                    document.getElementById('btnSaveScript').classList.remove('hidden');
-                }
                 window.showToast("Naskah berhasil dibuat!", false);
-                await consumeToken(); // Token baru dipotong jika AI SUKSES memberikan respons
+
+                if (currentUser && currentCustomEmail) {
+                    try {
+                        const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
+                        await addDoc(historyRef, {
+                            customEmail: currentCustomEmail,
+                            title: title,
+                            genre: genre,
+                            scriptHTML: formattedHTML,
+                            wordCount: wordCount,
+                            createdAt: new Date().toISOString()
+                        });
+                    } catch(err) {
+                        console.warn("Gagal menyimpan riwayat:", err.message);
+                    }
+                }
+
             } else {
                 throw new Error("Respon AI tidak valid atau kosong.");
             }
-        } catch (error){
-            console.error("Generate Error:", error);
-            let errorMessage = "Gagal terhubung ke server. " + (error.message || "");
+        } catch (error) {
+            console.warn("Generate AI Note:", error.message);
+            let errorMessage = error.message || "";
 
-            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("kuota") || errorMessage.toLowerCase().includes("sibuk") || errorMessage.toLowerCase().includes("429")) {
-               window.showToast("Server AI sedang sibuk. Kuota tercapai. Silakan coba sesaat lagi.", true);
+            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("exceeded") || errorMessage.toLowerCase().includes("limit: 20")) {
+               window.showToast("Server AI sedang penuh. Silakan tunggu sekitar 15-30 detik lalu coba lagi.", true);
                scriptBox.innerHTML = `
                 <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    Server Google sedang penuh antrean atau kuota habis.<br>
-                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 1 menit lalu coba lagi. (Token tidak berkurang)</span>
+                    Batas penggunaan AI (Limit 20/menit) telah tercapai.<br>
+                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 15-30 detik lalu tekan tombol Generate lagi.</span>
                 </div>`;
             } else {
                 scriptBox.innerHTML = `
@@ -1241,41 +1253,9 @@
                 </div>`;
                 window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
             }
-            // Catatan: consumeToken() tidak dipanggil di sini, sehingga token aman.
         } finally {
             btn.disabled = false;
             loader.classList.add('hidden');
-        }
-    }
-
-    window.saveCurrentScript = async function() {
-        if (!currentGeneratedScript) return;
-        const btn = document.getElementById('btnSaveScript');
-        const originalHTML = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = `<div class="loader !w-3 !h-3 !border-2 mr-1"></div> Menyimpan...`;
-
-        try {
-            const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
-            const historySnap = await getDocs(historyRef);
-            if (historySnap.size >= 10) {
-                window.showToast("Kuota simpan (10) penuh! Hapus naskah lama di riwayat.", true);
-                return;
-            }
-            await addDoc(historyRef, {
-                customEmail: currentCustomEmail,
-                title: currentGeneratedScript.title,
-                scriptHTML: currentGeneratedScript.scriptHTML,
-                wordCount: currentGeneratedScript.wordCount,
-                createdAt: new Date().toISOString()
-            });
-            window.showToast("Naskah berhasil disimpan!");
-            btn.classList.add('hidden');
-        } catch(e){
-            window.showToast("Gagal menyimpan naskah.", true);
-        } finally { 
-            btn.disabled = false; 
-            if (!btn.classList.contains('hidden')) btn.innerHTML = originalHTML;
         }
     }
 
@@ -1283,23 +1263,44 @@
         const lines = rawText.split('\n');
         let html = '';
         let sceneCount = 0;
-        let lastType = 'none';
+        let lastLineType = 'none'; 
+        let isFirstElement = true;
+
         lines.forEach(line => {
             let trimmed = line.trim();
-            if (!trimmed) return;
-            if (/^(INT\.|EXT\.|INT\/EXT\.)/i.test(trimmed)) {
+            trimmed = trimmed.replace(/^>\s*/, '').replace(/\*\*/g, '').replace(/\*/g, '');
+            trimmed = trimmed.replace(/\s{2,}/g, ' '); 
+
+            if (!trimmed) {
+                lastLineType = 'none';
+                return;
+            }
+
+            let mt0 = isFirstElement ? ' style="margin-top: 0 !important; padding-top: 0 !important;"' : '';
+            isFirstElement = false;
+
+            let cleanScene = trimmed.replace(/^\d+\.\s*/, '');
+
+            if (/^(INT\.|EXT\.|INT\/EXT\.|I\/E\.|INT |EXT )/i.test(cleanScene)) {
                 sceneCount++;
-                html += `<div class="scene-heading"><b>${sceneCount}. ${trimmed.toUpperCase()}</b></div>`;
-                lastType = 'scene';
-            } else if (trimmed === trimmed.toUpperCase() && trimmed.length < 50 && !trimmed.includes('.')) {
-                html += `<div class="character-name"><b>${trimmed}</b></div>`;
-                lastType = 'char';
-            } else if (lastType === 'char') {
-                html += `<div class="dialogue">${trimmed}</div>`;
-                lastType = 'dialogue';
-            } else {
-                html += `<div class="action-line">${trimmed}</div>`;
-                lastType = 'action';
+                html += `<div class="scene-heading"${mt0}>${sceneCount}. ${cleanScene.toUpperCase()}</div>`;
+                lastLineType = 'scene';
+            } 
+            else if (trimmed === trimmed.toUpperCase() && trimmed.length < 50 && !trimmed.match(/[a-z]/) && !trimmed.includes(' - ') && trimmed.length > 1) {
+                html += `<div class="character-name"${mt0}>${trimmed}</div>`;
+                lastLineType = 'char';
+            }
+            else if (trimmed.startsWith('(') && trimmed.endsWith(')')) {
+                html += `<div class="parenthetical"${mt0}>${trimmed}</div>`;
+                lastLineType = 'char'; 
+            }
+            else if (lastLineType === 'char' || lastLineType === 'dialogue') {
+                html += `<div class="dialogue"${mt0}>${trimmed}</div>`;
+                lastLineType = 'dialogue';
+            }
+            else {
+                html += `<div class="action-line"${mt0}>${trimmed}</div>`;
+                lastLineType = 'action';
             }
         });
         return html;
@@ -1307,86 +1308,180 @@
 
     window.downloadPDF = function() {
         const element = document.getElementById('printArea');
-        html2pdf().set({ margin: [25.4, 25.4, 25.4, 25.4], filename: 'script.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4' } }).from(element).save();
-    }
+        const title = document.getElementById('title').value || "Naskah";
+        const titleContainer = document.querySelector('.title-page-container');
+        
+        const origPrintAreaStyle = element.getAttribute('style') || '';
+        const origContainerStyle = titleContainer.getAttribute('style') || '';
+        const pages = element.querySelectorAll('.script-page');
+        const origStyles = [];
 
-    window.downloadDoc = function() {
-        const scriptHTML = document.getElementById('scriptContent').innerHTML;
-        const title = document.getElementById('title').value || "Script";
-        const content = `<html><head><meta charset='utf-8'><style>body{font-family:'Courier New';font-size:12pt}.scene-heading, .character-name{font-weight:bold;text-transform:uppercase}.character-name{text-align:center}.dialogue{margin-left:2.5cm;margin-right:2.5cm}</style></head><body>${scriptHTML}</body></html>`;
-        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${title}.doc`; a.click();
+        element.classList.add('pdf-download-mode');
+        
+        pages.forEach((p, index) => {
+            origStyles[index] = p.getAttribute('style') || '';
+            p.style.setProperty('width', '159.2mm', 'important'); 
+        });
+
+        titleContainer.style.setProperty('height', '235mm', 'important');
+
+        const opt = {
+            margin:       [25.4, 25.4, 25.4, 25.4], 
+            filename:     `${title.replace(/\s+/g, '_')}.pdf`,
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'avoid-all'], before: '#scriptContent' } 
+        };
+
+        window.showToast("PDF sedang diproses dan diunduh...");
+        
+        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+            const totalPages = pdf.internal.getNumberOfPages();
+            
+            pdf.setFont('courier', 'normal');
+            pdf.setFontSize(12);
+            
+            for (let i = 2; i <= totalPages; i++) {
+                pdf.setPage(i);
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const pageNumberText = (i - 1).toString() + ".";
+                pdf.text(pageNumberText, pageWidth - 25.4, pageHeight - 12.7, { align: 'right' });
+            }
+        }).save().then(() => {
+            element.classList.remove('pdf-download-mode');
+            element.setAttribute('style', origPrintAreaStyle);
+            titleContainer.setAttribute('style', origContainerStyle);
+            
+            pages.forEach((p, index) => {
+                p.setAttribute('style', origStyles[index]);
+            });
+        });
     }
 
     window.downloadFDX = function() {
-        const fdx = `<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Version="4"><Content><Paragraph Type="Action"><Text>${document.getElementById('scriptContent').innerText}</Text></Paragraph></Content></FinalDraft>`;
+        window.showToast("Mengunduh format FDX mentah.", false);
+        const title = document.getElementById('title').value || "Script";
+        const content = document.getElementById('scriptContent').innerText;
+        const fdx = `<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Version="4"><Content><Paragraph Type="Action"><Text>${content}</Text></Paragraph></Content></FinalDraft>`;
         const blob = new Blob([fdx], { type: 'application/xml' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'script.fdx'; a.click();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.fdx`;
+        a.click();
     }
 
     window.copyScript = function() {
+        const text = document.getElementById('scriptContent').innerText;
+        if(!text.trim()) {
+            window.showToast("Naskah masih kosong!", true);
+            return;
+        }
+        
         const textArea = document.createElement("textarea");
-        textArea.value = document.getElementById('scriptContent').innerText;
-        document.body.appendChild(textArea); textArea.select(); document.execCommand("copy");
-        document.body.removeChild(textArea); window.showToast("Salin berhasil!");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        
+        try {
+            document.execCommand("copy");
+            window.showToast("Naskah berhasil disalin ke clipboard!");
+        } catch (err) {
+            window.showToast("Gagal menyalin naskah. Silakan coba lagi.", true);
+        } finally {
+            document.body.removeChild(textArea);
+        }
     }
+
+    let userHistory = [];
 
     window.openHistoryModal = async function() {
         document.getElementById('historyModal').classList.remove('hidden');
-        const listEl = document.getElementById('historyList');
-        listEl.innerHTML = '<div class="text-center py-10"><div class="loader"></div></div>';
+        document.getElementById('historyList').innerHTML = '<div class="loader mx-auto block mt-10"></div>';
+
+        if (!currentUser || !currentCustomEmail) return;
+
         try {
             const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
-            const snap = await getDocs(historyRef);
-            currentHistoryData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-            document.getElementById('quotaCount').innerText = currentHistoryData.length;
+            const snapshot = await getDocs(historyRef);
+            const allHistory = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            userHistory = allHistory
+                .filter(item => item.customEmail === currentCustomEmail)
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
             renderHistoryList();
-        } catch(e){}
+        } catch (err) {
+            console.warn("History Note:", err.message);
+            document.getElementById('historyList').innerHTML = '<p class="text-red-500 text-center mt-5 text-sm font-bold">Gagal memuat riwayat.</p>';
+        }
     }
 
-    window.closeHistoryModal = function() { document.getElementById('historyModal').classList.add('hidden'); }
+    window.closeHistoryModal = function() {
+        document.getElementById('historyModal').classList.add('hidden');
+    }
 
     function renderHistoryList() {
         const listEl = document.getElementById('historyList');
-        if (currentHistoryData.length === 0) { listEl.innerHTML = '<p class="text-center py-10 opacity-50 text-sm">Belum ada riwayat.</p>'; return; }
-        listEl.innerHTML = currentHistoryData.map(item => `
-            <div class="p-4 border border-slate-200 rounded-xl bg-white shadow-sm flex items-center justify-between gap-4" id="hist-${item.id}">
-                <div class="flex-1 cursor-pointer" onclick="loadHistoryItem('${item.id}')">
-                    <h3 class="font-bold text-sm text-slate-800 uppercase line-clamp-1">${item.title || 'NASKAH TANPA JUDUL'}</h3>
-                    <p class="text-[10px] text-slate-400 mt-1">${new Date(item.createdAt).toLocaleDateString('id-ID')} - ${new Date(item.createdAt).toLocaleTimeString('id-ID')}</p>
+        if (userHistory.length === 0) {
+            listEl.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-40 text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="text-sm">Belum ada riwayat naskah.</p>
+                </div>`;
+            return;
+        }
+
+        listEl.innerHTML = userHistory.map(item => `
+            <div class="p-4 border border-slate-200 rounded-xl bg-white shadow-sm hover:shadow-md hover:border-blue-300 transition group">
+                <div class="flex justify-between items-start mb-1">
+                    <h3 class="font-bold text-sm text-slate-800 line-clamp-1 pr-2" title="${item.title}">${item.title || 'Naskah Tanpa Judul'}</h3>
+                    <span class="text-[9px] font-mono text-slate-400 whitespace-nowrap pt-0.5">${new Date(item.createdAt).toLocaleDateString('id-ID')}</span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="loadHistoryItem('${item.id}')" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg text-xs font-bold border border-blue-100 hover:bg-blue-600 hover:text-white transition">Buka Naskah</button>
-                    <button onclick="deleteHistoryItem('${item.id}')" class="text-slate-300 hover:text-red-500 transition p-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                <p class="text-[11px] text-slate-500 mb-4 bg-slate-100 px-2 py-1 rounded inline-block">${item.genre || 'Umum'} • ± ${item.wordCount} Menit</p>
+                <div class="flex gap-2">
+                    <button onclick="loadHistoryItem('${item.id}')" class="flex-1 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white text-xs font-bold py-2 rounded-lg transition shadow-sm border border-blue-100 hover:border-blue-600">Buka Naskah</button>
+                    <button onclick="deleteHistoryItem('${item.id}')" class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-bold px-3 py-2 rounded-lg transition shadow-sm border border-red-100 hover:border-red-600" title="Hapus Naskah">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </button>
                 </div>
             </div>
         `).join('');
     }
 
     window.loadHistoryItem = function(id) {
-        const item = currentHistoryData.find(h => h.id === id);
+        const item = userHistory.find(h => h.id === id);
         if (!item) return;
+
         window.resetWorkspace();
         document.getElementById('scriptContent').innerHTML = item.scriptHTML;
         document.getElementById('scriptContent').classList.remove('hidden');
         document.getElementById('placeholderState').classList.add('hidden');
         document.getElementById('durValue').innerText = item.wordCount;
         document.getElementById('durationTag').classList.remove('hidden');
-        document.getElementById('title').value = item.title;
+
+        document.getElementById('title').value = item.title || 'Naskah Tanpa Judul';
         window.updateTitlePage();
         window.closeHistoryModal();
-        window.showToast("Naskah dimuat!");
+        window.showToast("Naskah berhasil dimuat dari riwayat.", false);
     }
 
     window.deleteHistoryItem = async function(id) {
         try {
-            await deleteDoc(doc(db, 'users', currentUser.uid, 'scriptHistory', id));
-            document.getElementById(`hist-${id}`).remove();
-            currentHistoryData = currentHistoryData.filter(h => h.id !== id);
-            document.getElementById('quotaCount').innerText = currentHistoryData.length;
-            if (currentHistoryData.length === 0) renderHistoryList();
-            window.showToast("Terhapus.");
-        } catch(e){}
+            const docRef = doc(db, 'users', currentUser.uid, 'scriptHistory', id);
+            await deleteDoc(docRef);
+            
+            userHistory = userHistory.filter(h => h.id !== id);
+            renderHistoryList();
+            window.showToast("Naskah berhasil dihapus.", false);
+        } catch(err) {
+            console.warn("Gagal hapus doc:", err.message);
+            window.showToast("Gagal menghapus naskah. Coba lagi.", true);
+        }
     }
 </script>
 </body>
