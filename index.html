@@ -119,7 +119,6 @@
 </head>
 <body class="bg-slate-100 min-h-screen relative">
 
-<!-- AUTHENTICATION CONTAINER -->
 <div id="authContainer" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity duration-700 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.98)), url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=2070&auto=format&fit=crop');">
     <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 
@@ -139,7 +138,6 @@
             <p class="text-[9px] text-cyan-100/60 uppercase tracking-[0.25em] mt-2">Aplikasi Pembuat Naskah Film Otomatis</p>
         </div>
 
-        <!-- LOGIN VIEW -->
         <div id="loginView" class="block relative z-10">
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-cyan-500 rounded-sm shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span> LOGIN PREMIUM
@@ -174,7 +172,6 @@
             </div>
         </div>
 
-        <!-- GUEST VIEW (TRIAL MODE) -->
         <div id="guestView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
                 <span class="w-1.5 h-4 bg-green-500 rounded-sm shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> AKSES TAMU
@@ -195,14 +192,12 @@
             </p>
         </div>
 
-        <!-- SIGNUP VIEW -->
         <div id="signupView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-purple-500 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span> REGISTRASI PREMIUM
             </h2>
             <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
                 <div>
-                    <!-- DIUBAH: "Email Baru" menjadi "Email" -->
                     <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 tracking-wider">Email</label>
                     <input type="email" id="signupEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-sm text-white placeholder-slate-600" placeholder="Masukkan email aktif">
                 </div>
@@ -229,7 +224,6 @@
             </p>
         </div>
 
-        <!-- FORGOT PASSWORD VIEW (RESET PASSWORD) -->
         <div id="forgotView" class="hidden relative z-10">
             <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
                 <span class="w-1.5 h-4 bg-yellow-500 rounded-sm shadow-[0_0_8px_rgba(234,179,8,0.8)]"></span> RESET PASSWORD
@@ -252,7 +246,6 @@
     </div>
 </div>
 
-<!-- UPGRADE MODAL -->
 <div id="qrisModal" class="fixed inset-0 z-[150] bg-slate-900/80 backdrop-blur-sm hidden flex justify-center items-center p-4 transition-opacity">
     <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
         <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-5 text-center relative">
@@ -265,9 +258,8 @@
                 <p class="text-sm font-bold text-slate-700 mb-1">Dapatkan Kode Akses</p>
                 <p class="text-2xl font-black text-green-600 mb-3">Rp 25.000</p>
                 
-                <!-- GAMBAR QRIS -->
                 <div class="bg-white p-2 rounded-xl inline-block shadow-sm border border-slate-200 mb-2">
-                    <img src="https://i.ibb.co/Ng8hKp9C/Screenshot-2026-04-27-194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
+                    <img src="Screenshot 2026-04-27 194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
                 </div>
                 
                 <p class="text-[10px] text-slate-500 mt-1 font-medium">Scan QRIS di atas, lalu kirim bukti pembayaran ke Admin untuk mendapatkan kode akses.</p>
@@ -284,7 +276,6 @@
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER -->
 <div id="appContainer" class="hidden">
     <nav class="bg-slate-900 text-white p-4 shadow-xl sticky top-0 z-40">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -300,12 +291,10 @@
             <div class="flex items-center gap-4 text-[10px] text-slate-300 font-mono uppercase">
                 <span id="userDisplay" class="font-bold text-blue-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden md:inline-block"></span>
                 
-                <!-- PREMIUM BADGE -->
                 <span id="premiumBadge" class="hidden font-bold text-yellow-400 bg-yellow-900/40 px-3 py-1 rounded-full border border-yellow-700">
                     AKUN PREMIUM
                 </span>
 
-                <!-- TOKEN BADGE (Khusus Tamu) -->
                 <span id="tokenBadge" class="hidden font-bold text-green-400 bg-green-900/40 px-3 py-1 rounded-full border border-green-700">
                     Sisa Token: <span id="tokenCountText">3</span>
                 </span>
@@ -553,7 +542,6 @@
             <div class="overflow-y-auto bg-slate-300 p-4 border-x border-b border-slate-300 h-full">
                 <div id="printArea">
                     
-                    <!-- TATA LETAK COVER -->
                     <div id="titlePage" class="script-page script-font">
                         <div class="title-page-container">
                             <div style="width: 100%; text-align: center; margin: 0; padding: 0;"> 
@@ -589,7 +577,6 @@
     </main>
 </div>
 
-<!-- MODAL RIWAYAT NASKAH (POPUP TENGAH) -->
 <div id="historyModal" class="fixed inset-0 z-[110] bg-slate-900/60 hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
     <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col transform transition-transform overflow-hidden max-h-[85vh]">
         <div class="p-6 border-b border-slate-100 relative">
@@ -806,23 +793,27 @@
         }
     }
 
-    async function checkAndConsumeToken() {
+    // FUNGSI CEK TOKEN: Mengecek dan memvalidasi sisa token
+    function hasEnoughToken() {
         if (!isGuestMode) return true;
         
         if (guestTokenCount <= 0) {
             openQrisModal();
             return false;
         }
+        return true;
+    }
 
+    // FUNGSI POTONG TOKEN: Memotong token HANYA JIKA AI berhasil dijalankan
+    async function consumeToken() {
+        if (!isGuestMode) return;
         try {
             const docRef = doc(db, 'guestTokens', currentCustomEmail);
             guestTokenCount--;
             await setDoc(docRef, { tokens: guestTokenCount, lastUsed: new Date().toISOString() }, { merge: true });
             document.getElementById('tokenCountText').innerText = guestTokenCount;
-            return true;
         } catch (error) {
-            window.showToast("Gagal memproses token.", true);
-            return false;
+            console.error("Gagal memotong token:", error);
         }
     }
 
@@ -1017,27 +1008,13 @@
         document.getElementById(`char-${id}`).remove();
     }
 
+    // FUNGSI API YANG DISEDERHANAKAN AGAR BERJALAN LANCAR DI VERCEL
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
-        const delays = [1000, 2000, 4000];
 
-        const fallbackAPI = async () => {
-            const apiKey = ""; 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            for (let i = 0; i < 3; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: combinedPrompt }] }] })
-                    });
-                    if (!response.ok) throw new Error();
-                    return await response.json();
-                } catch (error) {
-                    await new Promise(resolve => setTimeout(resolve, delays[i]));
-                }
-            }
-        };
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI") {
+            throw new Error("URL Google Apps Script belum dikonfigurasi.");
+        }
 
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -1045,16 +1022,26 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
             });
+            
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+            
             const data = await response.json();
-            if (data.error) throw new Error("QUOTA_EXCEEDED");
+            
+            if (data.error && !data.candidates) {
+                let errMsg = data.error.message || JSON.stringify(data.error);
+                throw new Error(errMsg);
+            }
+            
             return data;
         } catch (error) {
-            return await fallbackAPI();
+            console.error("Fetch AI Error:", error);
+            throw error;
         }
     }
 
     window.optimizeField = async function(elementId, fieldName) {
-        if (!(await checkAndConsumeToken())) return;
+        if (!hasEnoughToken()) return; // Mengecek apakah punya token sebelum mulai
+        
         const element = document.getElementById(elementId);
         const originalText = element.value.trim();
         if (!originalText) return window.showToast(`Tulis ide awal ${fieldName} dulu!`, true);
@@ -1064,17 +1051,45 @@
         btn.disabled = true;
         btn.innerHTML = `<span class="animate-spin inline-block">⏳</span>`;
 
-        const systemPrompt = `Anda adalah konsultan naskah film profesional. Optimalkan teks berikut tanpa basa-basi.`;
-        const userQuery = `Optimalkan ${fieldName}: "${originalText}"`;
+        const genre = document.getElementById('genre').value || "Umum";
+        const theme = document.getElementById('theme').value || "Bebas";
+
+        let formatInstruction = "Buat bahasanya lebih memikat, deskriptif, dan gaya bahasa penulis naskah profesional.";
+        if (fieldName === 'premis') {
+            formatInstruction = "Tulis ulang menjadi format 'Logline' yang sangat kuat, memikat, dan menjual (Maksimal 1 hingga 2 kalimat saja).";
+        } else if (fieldName === 'sinopsis') {
+            formatInstruction = "Tulis ulang menjadi 1 hingga 2 paragraf sinopsis yang dramatis, berfokus pada konflik utama, dan menggugah rasa penasaran penonton.";
+        } else if (fieldName.includes('plot')) {
+            formatInstruction = "Pertajam narasi struktur plot ini agar elemen ketegangan, kausalitas (sebab-akibat), dan motivasi karakternya jauh lebih masuk akal dan terasa kuat.";
+        } else if (fieldName.includes('latar belakang')) {
+            const charCard = element.closest('.character-card');
+            let charName = "Karakter ini";
+            if (charCard) {
+                const nameInput = charCard.querySelector('.char-name');
+                if (nameInput && nameInput.value.trim() !== "") {
+                    charName = nameInput.value.trim();
+                }
+            }
+            formatInstruction = `Perdalam aspek psikologis, kejadian masa lalu (backstory), trauma, dan motivasi terdalam dari karakter bernama "${charName}" ini agar ia terasa nyata dan kompleks (3 dimensi). PASTIKAN nama "${charName}" selalu disebut dan digunakan dengan benar di dalam narasi hasil optimasinya.`;
+        }
+
+        const systemPrompt = `Anda adalah "Script Doctor" / konsultan naskah film profesional Hollywood.\nTUGAS ANDA: Mengoptimalkan ide kasar dari pengguna menjadi narasi film yang jauh lebih baik, logis, dan sinematik.\n\nATURAN MUTLAK:\n1. JANGAN tambahkan teks pengantar atau penutup (seperti "Berikut adalah hasilnya:" atau "Tentu, ini dia").\n2. LANGSUNG berikan teks murni hasil optimasi saja.\n3. Perbaiki ejaan dan tata bahasa menjadi bahasa Indonesia yang baku, kaya kosa kata, namun tetap luwes untuk skenario.`;
+        const userQuery = `OPTIMALKAN IDE BERIKUT!\n\nElemen Naskah: [${fieldName}]\nGenre Film: [${genre}]\nTema: [${theme}]\n\nIDE KASAR AWAL:\n"${originalText}"\n\nINSTRUKSI FORMATTING:\n${formatInstruction}`;
 
         try {
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
             let optimizedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (optimizedText) {
-                element.value = optimizedText.trim();
-                window.showToast(`${fieldName} dioptimalkan!`);
+                element.value = optimizedText.trim().replace(/^"|"$/g, '').trim();
+                window.showToast(`${fieldName.toUpperCase()} berhasil dioptimalkan!`, false);
+                await consumeToken(); // Token baru dipotong jika AI SUKSES memberikan respons
+            } else {
+                throw new Error("Respon AI kosong.");
             }
-        } catch (e){} finally {
+        } catch (error) {
+            console.error("Optimize Error:", error);
+            window.showToast(`Gagal mengoptimalkan: ${error.message}`, true);
+        } finally {
             btn.disabled = false;
             btn.innerHTML = originalBtnHTML;
         }
@@ -1085,7 +1100,37 @@
         const premise = document.getElementById('premise').value;
         if (!title || !premise) return window.showToast("Lengkapi Judul dan Premis!", true);
 
-        if (!(await checkAndConsumeToken())) return;
+        const characters = [];
+        document.querySelectorAll('.character-card').forEach(card => {
+            const charName = card.querySelector('.char-name').value;
+            if(charName.trim() !== "") {
+                characters.push({ name: charName });
+            }
+        });
+
+        if (characters.length === 0) {
+            window.showToast("Harap lengkapi minimal satu Karakter yang memiliki nama.", true);
+            return;
+        }
+
+        if (!hasEnoughToken()) return; // Mengecek apakah punya token sebelum mulai
+
+        const targetDuration = document.getElementById('duration').value;
+        const genre = document.getElementById('genre').value;
+        const synopsis = document.getElementById('synopsis').value;
+        
+        let timeSetting = document.getElementById('timeSetting').value;
+        if(timeSetting === "Lainnya") timeSetting = document.getElementById('customTimeInput').value || "Bebas";
+
+        let placeSetting = document.getElementById('placeSetting').value;
+        if(placeSetting === "Lainnya") placeSetting = document.getElementById('customPlaceInput').value || "Bebas";
+
+        const theme = document.getElementById('theme').value || "Bebas";
+        const endingType = document.getElementById('endingType').value;
+        const plotIntro = document.getElementById('plotIntro').value;
+        const plotConflict = document.getElementById('plotConflict').value;
+        const plotClimax = document.getElementById('plotClimax').value;
+        const plotResolution = document.getElementById('plotResolution').value;
 
         const btn = document.getElementById('generateBtn');
         const loader = document.getElementById('btnLoader');
@@ -1095,11 +1140,60 @@
         btn.disabled = true;
         loader.classList.remove('hidden');
         placeholder.classList.add('hidden');
-        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader"></div><p>AI sedang menulis...</p></div>`;
+        scriptBox.innerHTML = `<div class="text-center p-20"><div class="loader mb-4"></div><p class="text-slate-500 font-semibold">AI sedang merangkai adegan dan dialog...</p></div>`;
         scriptBox.classList.remove('hidden');
 
-        const systemPrompt = `Anda adalah penulis skenario film. Tulis naskah dalam format Hollywood (Kapital untuk Heading & Nama). Gunakan Bahasa Indonesia.`;
-        const userQuery = `Judul: ${title}\nPremis: ${premise}`;
+        const charPrompt = [];
+        document.querySelectorAll('.character-card').forEach(card => {
+            const charName = card.querySelector('.char-name').value;
+            if(charName.trim() !== "") {
+                charPrompt.push(`- NAMA: ${charName} (${card.querySelector('.role-type').value})\n  Umur: ${card.querySelector('.char-age').value}\n  Fisik: ${card.querySelector('.char-physical').value}\n  Sifat: ${card.querySelector('.char-traits').value}\n  Latar Belakang: ${card.querySelector('.char-background').value}`);
+            }
+        });
+
+        let plotStructure = "Ikuti alur cerita yang logis dari awal hingga akhir.";
+        if (plotIntro || plotConflict || plotClimax || plotResolution) {
+            plotStructure = `STRUKTUR PLOT UTAMA:
+            1. PERKENALAN: ${plotIntro || "Sesuaikan dengan premis"}
+            2. KONFLIK: ${plotConflict || "Kembangkan konflik dari premis"}
+            3. KLIMAKS: ${plotClimax || "Puncak ketegangan cerita"}
+            4. ENDING (${endingType}): ${plotResolution || "Berikan konklusi yang sesuai"}`;
+        } else {
+            plotStructure = `Pastikan cerita memiliki struktur tiga babak yang jelas dengan ending bertipe: ${endingType}.`;
+        }
+
+        const systemPrompt = `Anda adalah penulis skenario film profesional bertaraf internasional.
+        TUGAS: Tulis naskah film (Scene 1 sampai Selesai) berdasarkan data yang diberikan oleh pengguna.
+        JANGAN MEMBUAT TITLE PAGE (Halaman Judul). LANGSUNG MULAI DENGAN SCENE 1.
+
+        ATURAN FORMATTING (Sangat Penting):
+        1. SCENE HEADING:
+           - Tulis dalam huruf kapital semua. Contoh: INT. KAMAR TIDUR - DAY
+        2. ACTION LINES (Deskripsi Visual):
+           - Tulis dalam paragraf biasa. Jelaskan apa yang terlihat dan terdengar. Jangan jelaskan isi pikiran karakter.
+        3. KARAKTER & DIALOG:
+           - NAMA KARAKTER HARUS DITULIS KAPITAL DI BARIS TERSENDIRI.
+           - DIALOG ditulis persis di bawah nama karakter.
+           - PARENTHETICAL (Instruksi akting) jika ada, tulis di dalam kurung sebelum dialog. Contoh: (sambil menangis)
+
+        PANDUAN KONTEN:
+        - Buat dialog yang natural dan tidak kaku.
+        - Sesuaikan deskripsi dan dialog dengan SETTING WAKTU (${timeSetting}) dan TEMPAT (${placeSetting}).
+        - Estimasi durasi: ${targetDuration}.
+        - Tema: ${theme}.
+        - Bahasa: Indonesia.`;
+
+        const userQuery = `GENERATE NASKAH FILM LENGKAP:
+        Judul: ${title}
+        Genre: ${genre}
+        Tema Utama: ${theme}
+        Premis: ${premise}
+        Sinopsis: ${synopsis}
+        
+        ${plotStructure}
+
+        DAFTAR KARAKTER:
+        ${charPrompt.join('\n\n')}`;
 
         try {
             const data = await fetchGeminiAPI(userQuery, systemPrompt);
@@ -1112,12 +1206,42 @@
                 document.getElementById('durValue').innerText = wordCount;
                 document.getElementById('durationTag').classList.remove('hidden');
                 
-                currentGeneratedScript = { title, scriptHTML: formattedHTML, wordCount };
+                currentGeneratedScript = { title, genre, scriptHTML: formattedHTML, wordCount };
                 if (currentUser && !isGuestMode) {
                     document.getElementById('btnSaveScript').classList.remove('hidden');
                 }
+                window.showToast("Naskah berhasil dibuat!", false);
+                await consumeToken(); // Token baru dipotong jika AI SUKSES memberikan respons
+            } else {
+                throw new Error("Respon AI tidak valid atau kosong.");
             }
-        } catch (e){} finally {
+        } catch (error){
+            console.error("Generate Error:", error);
+            let errorMessage = "Gagal terhubung ke server. " + (error.message || "");
+
+            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("kuota") || errorMessage.toLowerCase().includes("sibuk") || errorMessage.toLowerCase().includes("429")) {
+               window.showToast("Server AI sedang sibuk. Kuota tercapai. Silakan coba sesaat lagi.", true);
+               scriptBox.innerHTML = `
+                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Server Google sedang penuh antrean atau kuota habis.<br>
+                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 1 menit lalu coba lagi. (Token tidak berkurang)</span>
+                </div>`;
+            } else {
+                scriptBox.innerHTML = `
+                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Terjadi kesalahan teknis.<br>
+                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Detail: ${errorMessage}</span>
+                </div>`;
+                window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
+            }
+            // Catatan: consumeToken() tidak dipanggil di sini, sehingga token aman.
+        } finally {
             btn.disabled = false;
             loader.classList.add('hidden');
         }
