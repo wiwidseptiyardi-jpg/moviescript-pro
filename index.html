@@ -151,7 +151,7 @@
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-cyan-500 rounded-sm shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span> LOGIN PREMIUM
             </h2>
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+            <form id="loginForm" onsubmit="window.handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[9px] font-bold text-cyan-500/80 uppercase mb-1 tracking-wider">Email</label>
                     <input type="email" id="loginEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition text-sm text-white placeholder-slate-600" placeholder="user@moviescript.ai">
@@ -161,7 +161,7 @@
                     <input type="password" id="loginPass" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition text-sm text-white placeholder-slate-600" placeholder="••••••••">
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" onclick="switchView('forgotView')" class="text-[10px] font-bold text-cyan-400 hover:text-cyan-300 hover:underline transition">Lupa Passwordnya?</button>
+                    <button type="button" onclick="window.switchView('forgotView')" class="text-[10px] font-bold text-cyan-400 hover:text-cyan-300 hover:underline transition">Lupa Passwordnya?</button>
                 </div>
                 <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-blue-700 to-cyan-600 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)] transition-all flex justify-center items-center gap-2 mt-2 tracking-widest text-xs uppercase">
                     <span>ACCESS SYSTEM</span>
@@ -170,13 +170,13 @@
             </form>
             
             <div class="mt-6 flex flex-col gap-3">
-                <button onclick="switchView('guestView')" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold py-3 rounded-xl transition text-xs tracking-wider flex justify-center items-center gap-2">
+                <button onclick="window.switchView('guestView')" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold py-3 rounded-xl transition text-xs tracking-wider flex justify-center items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                     </svg> COBA GRATIS (TAMU)
                 </button>
                 <p class="text-center text-[10px] text-slate-400 uppercase tracking-wider">
-                    BELUM PUNYA AKUN PREMIUM? <button onclick="switchView('signupView')" class="font-bold text-cyan-400 hover:text-cyan-300 border-b border-cyan-400/30 pb-0.5 ml-1">REGISTRASI</button>
+                    BELUM PUNYA AKUN PREMIUM? <button onclick="window.switchView('signupView')" class="font-bold text-cyan-400 hover:text-cyan-300 border-b border-cyan-400/30 pb-0.5 ml-1">REGISTRASI</button>
                 </p>
             </div>
         </div>
@@ -187,7 +187,7 @@
                 <span class="w-1.5 h-4 bg-green-500 rounded-sm shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> AKSES TAMU
             </h2>
             <p class="text-[10px] text-slate-400 mb-5 leading-relaxed">Dapatkan 3 Token gratis untuk mencoba kecanggihan MovieScript.AI</p>
-            <form id="guestForm" onsubmit="handleGuestLogin(event)" class="space-y-4">
+            <form id="guestForm" onsubmit="window.handleGuestLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[9px] font-bold text-green-500/80 uppercase mb-1 tracking-wider">Alamat Email Aktif</label>
                     <input type="email" id="guestEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition text-sm text-white placeholder-slate-600" placeholder="tamu@email.com">
@@ -198,7 +198,7 @@
                 </button>
             </form>
             <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
-                SUDAH PUNYA AKUN? <button onclick="switchView('loginView')" class="font-bold text-green-400 hover:text-green-300 border-b border-green-400/30 pb-0.5 ml-1">LOGIN</button>
+                SUDAH PUNYA AKUN? <button onclick="window.switchView('loginView')" class="font-bold text-green-400 hover:text-green-300 border-b border-green-400/30 pb-0.5 ml-1">LOGIN</button>
             </p>
         </div>
 
@@ -207,7 +207,7 @@
             <h2 class="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <span class="w-1.5 h-4 bg-purple-500 rounded-sm shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span> REGISTRASI PREMIUM
             </h2>
-            <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4">
+            <form id="signupForm" onsubmit="window.handleSignup(event)" class="space-y-4">
                 <div>
                     <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 tracking-wider">Email</label>
                     <input type="email" id="signupEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-sm text-white placeholder-slate-600" placeholder="Masukkan email aktif">
@@ -219,7 +219,7 @@
                 <div>
                     <label class="block text-[9px] font-bold text-purple-400/80 uppercase mb-1 flex justify-between items-center tracking-wider">
                         kode akses
-                        <button type="button" onclick="openQrisModal()" class="text-[9px] font-bold text-purple-300 hover:text-white flex items-center gap-1 bg-purple-900/50 px-2 py-0.5 rounded border border-purple-500/30 hover:border-purple-400 transition">
+                        <button type="button" onclick="window.openQrisModal()" class="text-[9px] font-bold text-purple-300 hover:text-white flex items-center gap-1 bg-purple-900/50 px-2 py-0.5 rounded border border-purple-500/30 hover:border-purple-400 transition">
                             BELI KODE AKSES
                         </button>
                     </label>
@@ -231,7 +231,7 @@
                 </button>
             </form>
             <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
-                SUDAH PUNYA AKUN? <button onclick="switchView('loginView')" class="font-bold text-purple-400 hover:text-purple-300 border-b border-purple-400/30 pb-0.5 ml-1">LOGIN</button>
+                SUDAH PUNYA AKUN? <button onclick="window.switchView('loginView')" class="font-bold text-purple-400 hover:text-purple-300 border-b border-purple-400/30 pb-0.5 ml-1">LOGIN</button>
             </p>
         </div>
 
@@ -244,7 +244,7 @@
                 Tautan reset password telah dikirim ke email Anda. Silakan cek Inbox/Spam.
             </div>
             <p id="forgotInstruction" class="text-[10px] text-slate-400 mb-5 leading-relaxed">Masukkan email Anda untuk menerima tautan reset password dari sistem.</p>
-            <form id="forgotForm" onsubmit="handleForgot(event)" class="space-y-4">
+            <form id="forgotForm" onsubmit="window.handleForgot(event)" class="space-y-4">
                 <div>
                     <label class="block text-[9px] font-bold text-yellow-500/80 uppercase mb-1 tracking-wider">Email Terdaftar</label>
                     <input type="email" id="forgotEmail" required class="w-full p-3 bg-slate-950/50 border border-slate-700/80 rounded-xl outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition text-sm text-white placeholder-slate-600">
@@ -252,7 +252,7 @@
                 <button type="submit" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:shadow-[0_0_25px_rgba(234,179,8,0.6)] transition tracking-widest text-xs uppercase">KIRIM TAUTAN RESET</button>
             </form>
             <p class="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-wider">
-                SUDAH INGAT PASSWORDNYA? <button onclick="switchView('loginView')" class="font-bold text-yellow-400 hover:text-yellow-300 border-b border-yellow-400/30 pb-0.5 ml-1">LOGIN</button>
+                SUDAH INGAT PASSWORDNYA? <button onclick="window.switchView('loginView')" class="font-bold text-yellow-400 hover:text-yellow-300 border-b border-yellow-400/30 pb-0.5 ml-1">LOGIN</button>
             </p>
         </div>
     </div>
@@ -262,7 +262,7 @@
 <div id="qrisModal" class="fixed inset-0 z-[150] bg-slate-900/80 backdrop-blur-sm hidden flex justify-center items-center p-4 transition-opacity">
     <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
         <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-5 text-center relative">
-            <button onclick="closeQrisModal()" class="absolute top-3 right-3 text-white/70 hover:text-white font-bold p-1">✕</button>
+            <button onclick="window.closeQrisModal()" class="absolute top-3 right-3 text-white/70 hover:text-white font-bold p-1">✕</button>
             <h2 class="text-xl font-black text-white tracking-tight">UPGRADE PREMIUM</h2>
             <p class="text-xs text-purple-100 mt-1">Akses Tanpa Batas & Riwayat Cloud</p>
         </div>
@@ -273,7 +273,7 @@
                 
                 <!-- GAMBAR QRIS -->
                 <div class="bg-white p-2 rounded-xl inline-block shadow-sm border border-slate-200 mb-2">
-                    <img src="Screenshot 2026-04-27 194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
+                    <img src="https://i.ibb.co/Ng8hKp9C/Screenshot-2026-04-27-194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
                 </div>
                 
                 <p class="text-[10px] text-slate-500 mt-1 font-medium">Scan QRIS di atas, lalu kirim bukti pembayaran ke Admin untuk mendapatkan kode akses.</p>
@@ -283,7 +283,7 @@
                 HUBUNGI ADMIN
             </a>
             
-            <button onclick="closeQrisModal(); document.getElementById('appContainer').classList.contains('hidden') ? switchView('signupView') : handleLogout()" class="text-xs text-slate-500 font-bold hover:text-purple-600 transition underline pt-2 block w-full text-center uppercase tracking-wider">
+            <button onclick="window.closeQrisModal(); document.getElementById('appContainer').classList.contains('hidden') ? window.switchView('signupView') : window.handleLogout()" class="text-xs text-slate-500 font-bold hover:text-purple-600 transition underline pt-2 block w-full text-center uppercase tracking-wider">
                 SUDAH DAPAT KODE? DAFTAR DI SINI
             </button>
         </div>
@@ -304,37 +304,38 @@
                 <p class="text-[10px] text-slate-400 font-medium tracking-wide uppercase mt-0.5 ml-8">Aplikasi Pembuat Naskah Film Otomatis</p>
             </div>
             <div class="flex items-center gap-4 text-[10px] text-slate-300 font-mono uppercase">
-                <span id="userDisplay" class="font-bold text-blue-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden md:inline-block"></span>
                 
-                <!-- PREMIUM BADGE -->
+                <!-- PREMIUM BADGE (Dipindah ke kiri email) -->
                 <span id="premiumBadge" class="hidden font-bold text-yellow-400 bg-yellow-900/40 px-3 py-1 rounded-full border border-yellow-700">
                     AKUN PREMIUM
                 </span>
+
+                <span id="userDisplay" class="font-bold text-blue-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden md:inline-block"></span>
 
                 <!-- TOKEN BADGE (Khusus Tamu) -->
                 <span id="tokenBadge" class="hidden font-bold text-green-400 bg-green-900/40 px-3 py-1 rounded-full border border-green-700">
                     Sisa Token: <span id="tokenCountText">3</span>
                 </span>
                 
-                <button id="btnNewProject" onclick="resetWorkspace()" class="hover:text-green-400 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-green-500 font-bold" title="Buat Project Naskah Baru">
+                <button id="btnNewProject" onclick="window.resetWorkspace()" class="hover:text-green-400 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-green-500 font-bold" title="Buat Project Naskah Baru">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 10-2 0h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg> <span class="hidden md:inline">Baru</span>
                 </button>
 
-                <button id="btnHistory" onclick="openHistoryModal()" class="hover:text-white transition flex items-center gap-1 border-l border-slate-700 pl-4">
+                <button id="btnHistory" onclick="window.openHistoryModal()" class="hover:text-white transition flex items-center gap-1 border-l border-slate-700 pl-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                     </svg> <span class="hidden md:inline">Riwayat</span>
                 </button>
 
-                <button id="btnUpgrade" onclick="openQrisModal()" class="hidden hover:text-yellow-300 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-yellow-400 font-bold" title="Upgrade ke Akun Premium">
+                <button id="btnUpgrade" onclick="window.openQrisModal()" class="hidden hover:text-yellow-300 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-yellow-400 font-bold" title="Upgrade ke Akun Premium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg> <span class="hidden md:inline uppercase">UPGRADE</span>
                 </button>
 
-                <button onclick="handleLogout()" class="hover:text-red-400 transition underline ml-2 border-l border-slate-700 pl-4 text-red-500 font-bold">Keluar</button>
+                <button onclick="window.handleLogout()" class="hover:text-red-400 transition underline ml-2 border-l border-slate-700 pl-4 text-red-500 font-bold">Keluar</button>
             </div>
         </div>
     </nav>
@@ -350,17 +351,17 @@
                 <div class="space-y-3">
                     <div>
                         <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Judul Film</label>
-                        <input type="text" id="title" oninput="updateTitlePage()" placeholder="Masukkan Judul Film" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition font-bold text-gray-800">
+                        <input type="text" id="title" oninput="window.updateTitlePage()" placeholder="Masukkan Judul Film" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition font-bold text-gray-800">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Penulis</label>
-                            <input type="text" id="author" oninput="updateTitlePage()" placeholder="Nama Penulis" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <input type="text" id="author" oninput="window.updateTitlePage()" placeholder="Nama Penulis" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         </div>
                         <div>
                             <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Draft Ke-</label>
-                            <select id="draft" onchange="updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <select id="draft" onchange="window.updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                                 <option value="Draft 1">Draft 1</option>
                                 <option value="Draft 2">Draft 2</option>
                                 <option value="Draft 3">Draft 3</option>
@@ -374,17 +375,17 @@
                     <div class="grid grid-cols-2 gap-3">
                          <div>
                             <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Tanggal</label>
-                            <input type="date" id="date" onchange="updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-600">
+                            <input type="date" id="date" onchange="window.updateTitlePage()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-600">
                         </div>
                         <div>
                              <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Rumah Produksi</label>
-                            <input type="text" id="productionHouse" oninput="updateTitlePage()" placeholder="Contoh: Sebelas Sinema" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <input type="text" id="productionHouse" oninput="window.updateTitlePage()" placeholder="Contoh: Sebelas Sinema" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         </div>
                     </div>
 
                     <div>
                         <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Kontak (HP / Email)</label>
-                        <input type="text" id="contact" oninput="updateTitlePage()" placeholder="0812xxxx / email@domain.com" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <input type="text" id="contact" oninput="window.updateTitlePage()" placeholder="0812xxxx / email@domain.com" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                     </div>
                 </div>
             </section>
@@ -422,7 +423,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div class="flex flex-col gap-1">
                             <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Setting Waktu</label>
-                            <select id="timeSetting" onchange="toggleCustom('timeSetting', 'customTimeInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                            <select id="timeSetting" onchange="window.toggleCustom('timeSetting', 'customTimeInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
                                 <option value="Sekarang (Present)">Sekarang (Modern)</option>
                                 <option value="Masa Lalu (Sejarah)">Masa Lalu (Sejarah)</option>
                                 <option value="Masa Depan (Futuristik)">Masa Depan (Sci-Fi)</option>
@@ -433,7 +434,7 @@
                         </div>
                         <div class="flex flex-col gap-1">
                             <label class="text-[9px] uppercase font-bold text-slate-400 ml-1">Setting Tempat</label>
-                            <select id="placeSetting" onchange="toggleCustom('placeSetting', 'customPlaceInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
+                            <select id="placeSetting" onchange="window.toggleCustom('placeSetting', 'customPlaceInput')" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm cursor-pointer">
                                 <option value="Perkotaan (Urban)">Perkotaan (Urban)</option>
                                 <option value="Pedesaan (Rural)">Pedesaan (Rural)</option>
                                 <option value="Alam Liar / Hutan">Alam Liar / Hutan</option>
@@ -511,7 +512,7 @@
                     <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
                         <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span> Daftar Karakter
                     </h2>
-                    <button onclick="addCharacter()" class="text-[10px] bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold hover:bg-blue-700 shadow-md transition flex items-center gap-1">
+                    <button onclick="window.addCharacter()" class="text-[10px] bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold hover:bg-blue-700 shadow-md transition flex items-center gap-1">
                         <span>+ TAMBAH</span>
                     </button>
                 </div>
@@ -520,7 +521,7 @@
                     </div>
             </section>
 
-            <button onclick="generateScript()" id="generateBtn" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2">
+            <button onclick="window.generateScript()" id="generateBtn" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2">
                 <span>GENERATE NASKAH OTOMATIS</span>
                 <div id="btnLoader" class="loader hidden"></div>
             </button>
@@ -533,22 +534,22 @@
                     <div id="durationTag" class="hidden px-2 py-0.5 bg-blue-600 text-white text-[10px] rounded-full uppercase font-mono">Est. <span id="durValue">0</span> Min</div>
                 </div>
                 <div class="flex gap-2">
-                    <button id="btnSaveScript" onclick="saveCurrentScript()" class="hidden px-3 py-1.5 bg-blue-600 text-white border border-blue-700 rounded text-xs font-semibold hover:bg-blue-700 transition shadow-sm flex items-center gap-1">
+                    <button id="btnSaveScript" onclick="window.saveCurrentScript()" class="hidden px-3 py-1.5 bg-blue-600 text-white border border-blue-700 rounded text-xs font-semibold hover:bg-blue-700 transition shadow-sm flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg> Simpan Naskah
                     </button>
-                    <button onclick="copyScript()" class="px-3 py-1.5 bg-white border border-slate-300 rounded text-xs font-semibold hover:bg-slate-50 transition shadow-sm">Copy Teks</button>
+                    <button onclick="window.copyScript()" class="px-3 py-1.5 bg-white border border-slate-300 rounded text-xs font-semibold hover:bg-slate-50 transition shadow-sm">Copy Teks</button>
                     <div class="relative group">
                         <button class="px-3 py-1.5 bg-red-600 text-white rounded text-xs font-semibold flex items-center gap-1 shadow-sm hover:bg-red-700">
                             Download Dokumen ▾
                         </button>
                         <div class="absolute right-0 mt-1 w-44 bg-white shadow-2xl rounded-md border border-slate-200 hidden group-hover:block z-10 overflow-hidden">
-                            <button onclick="downloadPDF()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-red-600">
+                            <button onclick="window.downloadPDF()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-red-600">
                                  Download PDF
                             </button>
-                            <button onclick="downloadDoc()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-blue-600">
+                            <button onclick="window.downloadDoc()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 border-b flex items-center gap-2 font-bold text-blue-600">
                                  Word Document (.doc)
                             </button>
-                            <button onclick="downloadFDX()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 flex items-center gap-2">
+                            <button onclick="window.downloadFDX()" class="w-full text-left px-4 py-3 text-xs hover:bg-slate-50 flex items-center gap-2">
                                  Final Draft (.fdx)
                             </button>
                         </div>
@@ -609,7 +610,7 @@
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                 </svg> Riwayat Naskah Anda
             </h2>
-            <button onclick="closeHistoryModal()" class="hover:text-red-400 transition font-bold p-1 text-lg">✕</button>
+            <button onclick="window.closeHistoryModal()" class="hover:text-red-400 transition font-bold p-1 text-lg">✕</button>
         </div>
         <div id="historyList" class="p-5 overflow-y-auto flex-1 space-y-4">
             </div>
@@ -620,42 +621,10 @@
     Pesan Notifikasi
 </div>
 
-<script type="module">
-    // ==========================================
-    // IMPORTS & SETUP FIREBASE
-    // ==========================================
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    // PENTING: Ganti dengan URL Google Apps Script Anda
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKDubAgUlYyXL5kdda0z4qTSeReuuScmUas2jKIFfkDanNopuaGzUHeoH7KJaoEgT-RA/exec";
-
-    // PENTING: MASUKKAN API KEY FIREBASE ANDA DI SINI UNTUK MENGHINDARI ERROR LOGIN
-    const firebaseConfig = {
-  apiKey: "AIzaSyBv2W26CoAOpxqFD0te83GoUm6sh5bQ3ro",
-  authDomain: "movie-script-925d3.firebaseapp.com",
-  projectId: "movie-script-925d3",
-  storageBucket: "movie-script-925d3.firebasestorage.app",
-  messagingSenderId: "405897726844",
-  appId: "1:405897726844:web:78539bbcdcaefe2477b2f9"
-};
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let characterCount = 0;
-    let currentUser = null;
-    let currentCustomEmail = null;
-
-    onAuthStateChanged(auth, async (user) => {
-        currentUser = user;
-        if (user) {
-            currentCustomEmail = user.email;
-        }
-    });
-
+<!-- ==========================================
+     UI FUNCTIONS (Instantly Available)
+     ========================================== -->
+<script>
     window.showToast = function(message, isError = false) {
         const toast = document.getElementById('toast');
         toast.innerHTML = message;
@@ -668,14 +637,90 @@
         }
         toast.style.opacity = '1';
         setTimeout(() => toast.style.opacity = '0', 3500);
-    }
+    };
 
     window.switchView = function(viewId) {
         document.getElementById('loginView').classList.add('hidden');
         document.getElementById('signupView').classList.add('hidden');
         document.getElementById('forgotView').classList.add('hidden');
+        document.getElementById('guestView').classList.add('hidden');
         document.getElementById(viewId).classList.remove('hidden');
-    }
+        
+        const resetMsg = document.getElementById('resetSuccessMsg');
+        if(resetMsg) resetMsg.classList.add('hidden');
+        const forgotInst = document.getElementById('forgotInstruction');
+        if(forgotInst) forgotInst.classList.remove('hidden');
+    };
+
+    window.openQrisModal = function() {
+        document.getElementById('qrisModal').classList.remove('hidden');
+        setTimeout(() => {
+            const modalDiv = document.querySelector('#qrisModal > div');
+            if(modalDiv) modalDiv.classList.remove('scale-95');
+        }, 10);
+    };
+
+    window.closeQrisModal = function() {
+        const modalDiv = document.querySelector('#qrisModal > div');
+        if(modalDiv) modalDiv.classList.add('scale-95');
+        setTimeout(() => {
+            document.getElementById('qrisModal').classList.add('hidden');
+        }, 300);
+    };
+
+    window.toggleCustom = function(selectId, inputId) {
+        const select = document.getElementById(selectId);
+        const input = document.getElementById(inputId);
+        if (select && input) {
+            if (select.value === "Lainnya") {
+                input.classList.remove('hidden');
+            } else {
+                input.classList.add('hidden');
+            }
+        }
+    };
+</script>
+
+<!-- ==========================================
+     APP LOGIC & FIREBASE (Module Scope)
+     ========================================== -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // PENTING: Ganti dengan URL Google Apps Script Anda
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKDubAgUlYyXL5kdda0z4qTSeReuuScmUas2jKIFfkDanNopuaGzUHeoH7KJaoEgT-RA/exec";
+
+    // PENTING: MASUKKAN API KEY FIREBASE ANDA DI SINI UNTUK MENGHINDARI ERROR LOGIN
+    const firebaseConfig = {
+      apiKey: "AIzaSyBv2W26CoAOpxqFD0te83GoUm6sh5bQ3ro",
+      authDomain: "movie-script-925d3.firebaseapp.com",
+      projectId: "movie-script-925d3",
+      storageBucket: "movie-script-925d3.firebasestorage.app",
+      messagingSenderId: "405897726844",
+      appId: "1:405897726844:web:78539bbcdcaefe2477b2f9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let characterCount = 0;
+    let currentUser = null;
+    let currentCustomEmail = null;
+    let currentGeneratedScript = null; 
+    let isGuestMode = false;
+    let guestTokenCount = 0;
+    let userHistory = [];
+
+    onAuthStateChanged(auth, async (user) => {
+        currentUser = user;
+        if (user && !user.isAnonymous) {
+            currentCustomEmail = user.email;
+            isGuestMode = false;
+        }
+    });
 
     window.resetWorkspace = function() {
         document.querySelectorAll('#appContainer input[type="text"], #appContainer input[type="date"], #appContainer textarea').forEach(el => el.value = '');
@@ -698,27 +743,122 @@
         document.getElementById('scriptContent').classList.add('hidden');
         document.getElementById('placeholderState').classList.remove('hidden');
         document.getElementById('durationTag').classList.add('hidden');
+        document.getElementById('btnSaveScript').classList.add('hidden');
+        currentGeneratedScript = null;
         
         document.getElementById('title').value = '';
         window.updateTitlePage();
     }
 
-    window.loginSuccess = function(email) {
+    window.loginSuccess = function(email, isGuest = false) {
         currentCustomEmail = email; 
-        document.getElementById('authContainer').classList.add('opacity-0');
+        isGuestMode = isGuest;
         
+        document.getElementById('authContainer').classList.add('opacity-0');
         window.resetWorkspace();
         
         setTimeout(() => {
             document.getElementById('authContainer').classList.add('hidden');
             document.getElementById('appContainer').classList.remove('hidden');
-            document.getElementById('userDisplay').innerText = email;
+            document.getElementById('userDisplay').innerText = isGuest ? `Tamu: ${email}` : email;
+            
+            if (isGuest) {
+                document.getElementById('tokenBadge').classList.remove('hidden');
+                document.getElementById('tokenCountText').innerText = guestTokenCount;
+                document.getElementById('premiumBadge').classList.add('hidden');
+                document.getElementById('btnNewProject').classList.add('hidden');
+                document.getElementById('btnHistory').classList.add('hidden');
+                document.getElementById('btnUpgrade').classList.remove('hidden');
+            } else {
+                document.getElementById('tokenBadge').classList.add('hidden');
+                document.getElementById('premiumBadge').classList.remove('hidden');
+                document.getElementById('btnNewProject').classList.remove('hidden');
+                document.getElementById('btnHistory').classList.remove('hidden');
+                document.getElementById('btnUpgrade').classList.add('hidden');
+            }
             
             document.getElementById('date').valueAsDate = new Date();
             window.updateTitlePage();
             
-            window.showToast("Berhasil masuk!", false);
+            window.showToast(isGuest ? `Masuk sebagai tamu. Anda punya ${guestTokenCount} token percobaan.` : "Berhasil masuk!", false);
         }, 300);
+    }
+
+    window.handleGuestLogin = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('guestEmail').value.trim().toLowerCase();
+        const btn = document.getElementById('btnGuest');
+        const loader = document.getElementById('guestLoader');
+        
+        if (!email) return;
+
+        const claimedEmail = localStorage.getItem('ms_device_guest_email');
+        if (claimedEmail && claimedEmail !== email) {
+            window.showToast(`Anda sudah mencoba dengan email tamu ${claimedEmail}. Jika ingin mencoba sepuasnya bisa memakai akun premium. Terimakasih`, true);
+            return;
+        }
+        
+        btn.disabled = true;
+        loader.classList.remove('hidden');
+
+        try {
+            await signInAnonymously(auth);
+            
+            const docRef = doc(db, 'guestTokens', email);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                guestTokenCount = docSnap.data().tokens;
+                localStorage.setItem('ms_device_guest_email', email);
+
+                if (guestTokenCount <= 0) {
+                    window.showToast("Token percobaan Anda sudah habis.", true);
+                    window.openQrisModal();
+                    await signOut(auth);
+                    return;
+                }
+            } else {
+                guestTokenCount = 3;
+                await setDoc(docRef, { 
+                    email: email,
+                    tokens: 3, 
+                    createdAt: new Date().toISOString(),
+                    userAgent: navigator.userAgent 
+                });
+                localStorage.setItem('ms_device_guest_email', email);
+            }
+
+            window.loginSuccess(email, true);
+
+        } catch (error) {
+            console.error(error);
+            window.showToast("Gagal masuk mode tamu: " + error.message, true);
+        } finally {
+            btn.disabled = false;
+            loader.classList.add('hidden');
+        }
+    }
+
+    function hasEnoughToken() {
+        if (!isGuestMode) return true;
+        
+        if (guestTokenCount <= 0) {
+            window.openQrisModal();
+            return false;
+        }
+        return true;
+    }
+
+    async function consumeToken() {
+        if (!isGuestMode) return;
+        try {
+            const docRef = doc(db, 'guestTokens', currentCustomEmail);
+            guestTokenCount--;
+            await setDoc(docRef, { tokens: guestTokenCount, lastUsed: new Date().toISOString() }, { merge: true });
+            document.getElementById('tokenCountText').innerText = guestTokenCount;
+        } catch (error) {
+            console.error("Gagal memotong token:", error);
+        }
     }
 
     window.handleLogin = async function(e) {
@@ -734,7 +874,7 @@
         
         // Bypass Admin
         if (email === "admin@moviescript.ai" && pass === "admin") {
-            window.loginSuccess(email);
+            window.loginSuccess(email, false);
             btnLogin.disabled = false;
             loader.classList.add('hidden');
             return;
@@ -742,9 +882,8 @@
 
         try {
             await signInWithEmailAndPassword(auth, email, pass);
-            window.loginSuccess(email);
+            window.loginSuccess(email, false);
         } catch (error) {
-            console.warn("Login Note:", error.message);
             if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
                 window.showToast("Email atau password salah!", true);
             } else if (error.code === 'auth/api-key-not-valid') {
@@ -797,7 +936,6 @@
                 return;
             }
         } catch (err) {
-            console.warn("Verifikasi Note:", err.message);
             window.showToast("Gagal memverifikasi kode ke server.", true);
             btnSignup.disabled = false;
             loader.classList.add('hidden');
@@ -805,14 +943,11 @@
         }
         
         try {
-            // 1. Daftarkan dan otentikasi user
             await createUserWithEmailAndPassword(auth, email, pass);
 
-            // PERBAIKAN KEAMANAN: Jangan Sign-out dulu! Kita butuh status 'Login' untuk menulis ke Database
             const uniqueId = 'MSP-' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
             const currentDate = new Date().toISOString();
 
-            // 2. Tulis data ke Firestore (Hanya menyimpan email, JANGAN menyimpan password di database!)
             const usersRef = collection(db, 'registeredUsers');
             await addDoc(usersRef, {
                 uid: uniqueId,
@@ -820,7 +955,6 @@
                 createdAt: currentDate
             });
 
-            // 3. Setelah database berhasil ditulis dengan aman, BARU kita Sign-out
             await signOut(auth);
 
             try {
@@ -836,7 +970,7 @@
                     })
                 });
             } catch (sheetError) {
-                console.warn("Gagal merekap ke Google Sheets:", sheetError.message);
+                // Silently fail sheet error
             }
             
             window.showToast("Data pendaftaran berhasil disimpan!", false);
@@ -844,7 +978,6 @@
             window.switchView('loginView');
 
         } catch (error) {
-            console.warn("Signup Note:", error.message);
             if (error.code === 'auth/email-already-in-use') {
                 window.showToast("Email sudah terdaftar, silakan login!", true);
             } else if (error.code === 'auth/api-key-not-valid') {
@@ -873,14 +1006,13 @@
         
         try {
             await sendPasswordResetEmail(auth, email);
-            window.showToast(`Tautan reset password telah dikirim ke email: ${email}`, false);
-            document.getElementById('forgotForm').reset();
+            const resetMsg = document.getElementById('resetSuccessMsg');
+            if(resetMsg) resetMsg.classList.remove('hidden');
+            const forgotInst = document.getElementById('forgotInstruction');
+            if(forgotInst) forgotInst.classList.add('hidden');
             
-            setTimeout(() => {
-                window.switchView('loginView');
-            }, 3000);
+            window.showToast(`Tautan reset password telah dikirim ke email: ${email}`, false);
         } catch (error) {
-            console.warn("Forgot Password Note:", error.message);
             if (error.code === 'auth/user-not-found') {
                 window.showToast("Email tidak ditemukan di sistem kami.", true);
             } else if (error.code === 'auth/api-key-not-valid') {
@@ -890,7 +1022,7 @@
             }
         } finally {
             btnSubmit.disabled = false;
-            btnSubmit.innerHTML = 'KIRIM PROTOKOL';
+            btnSubmit.innerHTML = 'KIRIM TAUTAN RESET';
         }
     }
 
@@ -898,6 +1030,7 @@
         try {
             await signOut(auth); 
             currentCustomEmail = null; 
+            isGuestMode = false;
             document.getElementById('appContainer').classList.add('hidden');
             document.getElementById('authContainer').classList.remove('hidden');
             document.getElementById('loginForm').reset();
@@ -910,18 +1043,7 @@
             
             window.showToast("Anda telah keluar.", false);
         } catch (error) {
-            console.warn("Logout Note:", error.message);
             window.showToast("Gagal keluar aplikasi.", true);
-        }
-    }
-
-    window.toggleCustom = function(selectId, inputId) {
-        const select = document.getElementById(selectId);
-        const input = document.getElementById(inputId);
-        if (select.value === "Lainnya") {
-            input.classList.remove('hidden');
-        } else {
-            input.classList.add('hidden');
         }
     }
 
@@ -990,7 +1112,7 @@
         document.getElementById(`char-${id}`).remove();
     }
 
-    // FUNGSI API (Hanya Mengandalkan Google Apps Script Tanpa Redireksi)
+    // FUNGSI API AI DENGAN RETRY OTOMATIS (Mencegah Error Tiba-tiba)
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
 
@@ -998,30 +1120,41 @@
             throw new Error("URL Google Apps Script belum dikonfigurasi.");
         }
 
-        try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
-            });
-            
-            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
-            
-            const data = await response.json();
-            
-            if (data.error && !data.candidates) {
-                let errMsg = data.error.message || JSON.stringify(data.error);
-                throw new Error(errMsg);
+        const delays = [2000, 4000, 8000]; // Retry 3 kali dengan jeda jika gagal/kuota habis
+        let lastError = null;
+
+        for (let i = 0; i < 4; i++) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'generateAI', prompt: combinedPrompt })
+                });
+                
+                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error.message || "Error dari server");
+                }
+                
+                return data; // Sukses, kembalikan data
+            } catch (error) {
+                lastError = error;
+                // Jika error, sistem akan menunggu senyap (silent retry) sebelum mencoba lagi
+                if (i < 3) {
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
             }
-            
-            return data;
-        } catch (error) {
-            console.warn("Fetch AI Note:", error.message);
-            throw error;
         }
+        
+        throw lastError; // Jika tetap gagal setelah mencoba 4 kali
     }
 
     window.optimizeField = async function(elementId, fieldName) {
+        if (!hasEnoughToken()) return; 
+        
         const element = document.getElementById(elementId);
         if (!element) return;
         const originalText = element.value.trim();
@@ -1068,17 +1201,12 @@
                 optimizedText = optimizedText.trim().replace(/^"|"$/g, '').trim();
                 element.value = optimizedText;
                 window.showToast(`${fieldName.toUpperCase()} berhasil dioptimalkan!`, false);
+                await consumeToken();
             } else {
                 throw new Error("Respon AI kosong.");
             }
         } catch (error) {
-            console.warn("Optimize AI Note:", error.message);
-            let errorMessage = error.message || "";
-            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("exceeded") || errorMessage.toLowerCase().includes("limit: 20")) {
-               window.showToast("Batas limit AI tercapai. Mohon tunggu sekitar 15-30 detik.", true);
-            } else {
-               window.showToast(`Gagal mengoptimalkan: ${error.message}`, true);
-            }
+            window.showToast("Server sedang sibuk, coba 15-30 menit lagi.", true);
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalBtnHTML;
@@ -1129,6 +1257,8 @@
             window.showToast("Harap lengkapi Judul, Premis, dan minimal satu Karakter yang memiliki nama.", true);
             return;
         }
+
+        if (!hasEnoughToken()) return;
 
         const btn = document.getElementById('generateBtn');
         const loader = document.getElementById('btnLoader');
@@ -1207,55 +1337,59 @@
                 document.getElementById('durValue').innerText = wordCount;
                 document.getElementById('durationTag').classList.remove('hidden');
                 
-                window.showToast("Naskah berhasil dibuat!", false);
-
-                if (currentUser && currentCustomEmail) {
-                    try {
-                        const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
-                        await addDoc(historyRef, {
-                            customEmail: currentCustomEmail,
-                            title: title,
-                            genre: genre,
-                            scriptHTML: formattedHTML,
-                            wordCount: wordCount,
-                            createdAt: new Date().toISOString()
-                        });
-                    } catch(err) {
-                        console.warn("Gagal menyimpan riwayat:", err.message);
-                    }
+                currentGeneratedScript = { title, genre, scriptHTML: formattedHTML, wordCount };
+                if (currentUser && !isGuestMode) {
+                    document.getElementById('btnSaveScript').classList.remove('hidden');
                 }
-
+                window.showToast("Naskah berhasil dibuat!", false);
+                await consumeToken();
             } else {
                 throw new Error("Respon AI tidak valid atau kosong.");
             }
         } catch (error) {
-            console.warn("Generate AI Note:", error.message);
-            let errorMessage = error.message || "";
-
-            if (errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("exceeded") || errorMessage.toLowerCase().includes("limit: 20")) {
-               window.showToast("Server AI sedang penuh. Silakan tunggu sekitar 15-30 detik lalu coba lagi.", true);
-               scriptBox.innerHTML = `
-                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    Batas penggunaan AI (Limit 20/menit) telah tercapai.<br>
-                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Saran: Tunggu 15-30 detik lalu tekan tombol Generate lagi.</span>
-                </div>`;
-            } else {
-                scriptBox.innerHTML = `
-                <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    Terjadi kesalahan teknis.<br>
-                    <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Detail: ${errorMessage}</span>
-                </div>`;
-                window.showToast("Gagal memuat naskah. Periksa pesan error.", true);
-            }
+            scriptBox.innerHTML = `
+            <div class="text-red-600 text-center p-8 font-medium overflow-hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Server sedang sibuk.<br>
+                <span class="text-sm font-normal text-slate-500 mt-3 block px-4 break-words">Silakan coba 15-30 menit lagi. (Token Anda aman)</span>
+            </div>`;
+            window.showToast("Server sedang sibuk, coba 15-30 menit lagi.", true);
         } finally {
             btn.disabled = false;
             loader.classList.add('hidden');
+        }
+    }
+
+    window.saveCurrentScript = async function() {
+        if (!currentGeneratedScript) return;
+        const btn = document.getElementById('btnSaveScript');
+        const originalHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<div class="loader !w-3 !h-3 !border-2 mr-1"></div> Menyimpan...`;
+
+        try {
+            const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
+            const historySnap = await getDocs(historyRef);
+            if (historySnap.size >= 10) {
+                window.showToast("Kuota simpan (10) penuh! Hapus naskah lama di riwayat.", true);
+                return;
+            }
+            await addDoc(historyRef, {
+                customEmail: currentCustomEmail,
+                title: currentGeneratedScript.title,
+                scriptHTML: currentGeneratedScript.scriptHTML,
+                wordCount: currentGeneratedScript.wordCount,
+                createdAt: new Date().toISOString()
+            });
+            window.showToast("Naskah berhasil disimpan!");
+            btn.classList.add('hidden');
+        } catch(e){
+            window.showToast("Gagal menyimpan naskah.", true);
+        } finally { 
+            btn.disabled = false; 
+            if (!btn.classList.contains('hidden')) btn.innerHTML = originalHTML;
         }
     }
 
@@ -1395,8 +1529,6 @@
         }
     }
 
-    let userHistory = [];
-
     window.openHistoryModal = async function() {
         document.getElementById('historyModal').classList.remove('hidden');
         document.getElementById('historyList').innerHTML = '<div class="loader mx-auto block mt-10"></div>';
@@ -1414,7 +1546,6 @@
 
             renderHistoryList();
         } catch (err) {
-            console.warn("History Note:", err.message);
             document.getElementById('historyList').innerHTML = '<p class="text-red-500 text-center mt-5 text-sm font-bold">Gagal memuat riwayat.</p>';
         }
     }
@@ -1444,8 +1575,8 @@
                 </div>
                 <p class="text-[11px] text-slate-500 mb-4 bg-slate-100 px-2 py-1 rounded inline-block">${item.genre || 'Umum'} • ± ${item.wordCount} Menit</p>
                 <div class="flex gap-2">
-                    <button onclick="loadHistoryItem('${item.id}')" class="flex-1 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white text-xs font-bold py-2 rounded-lg transition shadow-sm border border-blue-100 hover:border-blue-600">Buka Naskah</button>
-                    <button onclick="deleteHistoryItem('${item.id}')" class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-bold px-3 py-2 rounded-lg transition shadow-sm border border-red-100 hover:border-red-600" title="Hapus Naskah">
+                    <button onclick="window.loadHistoryItem('${item.id}')" class="flex-1 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white text-xs font-bold py-2 rounded-lg transition shadow-sm border border-blue-100 hover:border-blue-600">Buka Naskah</button>
+                    <button onclick="window.deleteHistoryItem('${item.id}')" class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-bold px-3 py-2 rounded-lg transition shadow-sm border border-red-100 hover:border-red-600" title="Hapus Naskah">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                 </div>
@@ -1479,7 +1610,6 @@
             renderHistoryList();
             window.showToast("Naskah berhasil dihapus.", false);
         } catch(err) {
-            console.warn("Gagal hapus doc:", err.message);
             window.showToast("Gagal menghapus naskah. Coba lagi.", true);
         }
     }
