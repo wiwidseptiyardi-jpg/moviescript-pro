@@ -186,7 +186,7 @@
             <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2 uppercase tracking-tight">
                 <span class="w-1.5 h-4 bg-green-500 rounded-sm shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> AKSES TAMU
             </h2>
-            <p class="text-[10px] text-slate-400 mb-5 leading-relaxed">Dapatkan 3 Token gratis untuk mencoba kecanggihan MovieScript.AI</p>
+            <p class="text-[10px] text-slate-400 mb-5 leading-relaxed">Dapatkan 1 Token gratis untuk mencoba kecanggihan MovieScript.AI</p>
             <form id="guestForm" onsubmit="window.handleGuestLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[9px] font-bold text-green-500/80 uppercase mb-1 tracking-wider">Alamat Email Aktif</label>
@@ -314,7 +314,7 @@
 
                 <!-- TOKEN BADGE (Khusus Tamu) -->
                 <span id="tokenBadge" class="hidden font-bold text-green-400 bg-green-900/40 px-3 py-1 rounded-full border border-green-700">
-                    Sisa Token: <span id="tokenCountText">3</span>
+                    Sisa Token: <span id="tokenCountText">1</span>
                 </span>
                 
                 <button id="btnNewProject" onclick="window.resetWorkspace()" class="hover:text-green-400 transition flex items-center gap-1 border-l border-slate-700 pl-4 text-green-500 font-bold" title="Buat Project Naskah Baru">
@@ -823,10 +823,10 @@
                     return;
                 }
             } else {
-                guestTokenCount = 3;
+                guestTokenCount = 1;
                 await setDoc(docRef, { 
                     email: email,
-                    tokens: 3, 
+                    tokens: 1, 
                     createdAt: new Date().toISOString(),
                     userAgent: navigator.userAgent 
                 });
@@ -1496,6 +1496,49 @@
                 p.setAttribute('style', origStyles[index]);
             });
         });
+    }
+
+    window.downloadDoc = function() {
+        window.showToast("Menyiapkan dokumen Word...", false);
+        const scriptHTML = document.getElementById('scriptContent').innerHTML;
+        const titlePageHTML = document.getElementById('titlePage').innerHTML;
+        const title = document.getElementById('title').value || "Script";
+        
+        // Membungkus dengan format standar MS Word dengan margin indentasi Inci persis Hollywood
+        const content = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+            <meta charset='utf-8'>
+            <style>
+                @page { margin: 1in 1in 1in 1.5in; }
+                body { font-family: 'Courier New', Courier, monospace; font-size: 12pt; color: #000; }
+                .title-page-container { text-align: center; padding-top: 2in; margin-bottom: 2in; }
+                .scene-heading { font-weight: bold; text-transform: uppercase; margin-top: 24pt; margin-bottom: 12pt; text-align: left; }
+                .action-line { margin-top: 12pt; margin-bottom: 12pt; text-align: left; }
+                .character-name { margin-top: 12pt; margin-bottom: 0; margin-left: 2.2in; font-weight: bold; text-transform: uppercase; text-align: left; }
+                .parenthetical { margin-top: 0; margin-bottom: 0; margin-left: 1.6in; text-align: left; }
+                .dialogue { margin-top: 0; margin-bottom: 12pt; margin-left: 1in; margin-right: 1in; text-align: left; }
+            </style>
+        </head>
+        <body>
+            <div class="title-page-container">
+                ${titlePageHTML}
+            </div>
+            
+            <!-- Perintah resmi HTML to Word untuk membuat Halaman Baru (Page Break) -->
+            <br clear="all" style="mso-special-character:line-break; page-break-before:always" />
+            
+            <div>
+                ${scriptHTML}
+            </div>
+        </body>
+        </html>`;
+        
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+        const a = document.createElement('a'); 
+        a.href = URL.createObjectURL(blob); 
+        a.download = `${title.replace(/\s+/g, '_')}.doc`; 
+        a.click();
     }
 
     window.downloadFDX = function() {
