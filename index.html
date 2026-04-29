@@ -273,7 +273,7 @@
                 
                 <!-- GAMBAR QRIS -->
                 <div class="bg-white p-2 rounded-xl inline-block shadow-sm border border-slate-200 mb-2">
-                    <img src="https://i.ibb.co/Ng8hKp9C/Screenshot-2026-04-27-194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
+                    <img src="Screenshot 2026-04-27 194835.png" alt="QRIS Code" class="w-36 h-36 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=QRIS_Placeholder'">
                 </div>
                 
                 <p class="text-[10px] text-slate-500 mt-1 font-medium">Scan QRIS di atas, lalu kirim bukti pembayaran ke Admin untuk mendapatkan kode akses.</p>
@@ -611,6 +611,11 @@
                 </svg> Riwayat Naskah Anda
             </h2>
             <button onclick="window.closeHistoryModal()" class="hover:text-red-400 transition font-bold p-1 text-lg">✕</button>
+        </div>
+        <div class="bg-white border-b border-slate-200 px-5 py-3">
+            <p class="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+                KUOTA PREMIUM: <span id="quotaCount" class="text-emerald-500">0</span> / 10 NASKAH
+            </p>
         </div>
         <div id="historyList" class="p-5 overflow-y-auto flex-1 space-y-4">
             </div>
@@ -1112,7 +1117,7 @@
         document.getElementById(`char-${id}`).remove();
     }
 
-    // FUNGSI API AI DENGAN RETRY OTOMATIS (Mencegah Error Tiba-tiba)
+    // FUNGSI API AI DENGAN RETRY OTOMATIS
     async function fetchGeminiAPI(userQuery, systemPrompt) {
         const combinedPrompt = `INSTRUKSI SISTEM (WAJIB DIIKUTI):\n${systemPrompt}\n\nINPUT PENGGUNA:\n${userQuery}`;
 
@@ -1120,7 +1125,7 @@
             throw new Error("URL Google Apps Script belum dikonfigurasi.");
         }
 
-        const delays = [2000, 4000, 8000]; // Retry 3 kali dengan jeda jika gagal/kuota habis
+        const delays = [2000, 4000, 8000]; // Retry 3 kali dengan jeda
         let lastError = null;
 
         for (let i = 0; i < 4; i++) {
@@ -1139,17 +1144,16 @@
                     throw new Error(data.error.message || "Error dari server");
                 }
                 
-                return data; // Sukses, kembalikan data
+                return data;
             } catch (error) {
                 lastError = error;
-                // Jika error, sistem akan menunggu senyap (silent retry) sebelum mencoba lagi
                 if (i < 3) {
                     await new Promise(resolve => setTimeout(resolve, delays[i]));
                 }
             }
         }
         
-        throw lastError; // Jika tetap gagal setelah mencoba 4 kali
+        throw lastError; 
     }
 
     window.optimizeField = async function(elementId, fieldName) {
@@ -1373,7 +1377,7 @@
             const historyRef = collection(db, 'users', currentUser.uid, 'scriptHistory');
             const historySnap = await getDocs(historyRef);
             if (historySnap.size >= 10) {
-                window.showToast("Kuota simpan (10) penuh! Hapus naskah lama di riwayat.", true);
+                window.showToast("Batas maksimal 10 naskah Premium tercapai! Hapus naskah lama di Riwayat.", true);
                 return;
             }
             await addDoc(historyRef, {
@@ -1544,6 +1548,7 @@
                 .filter(item => item.customEmail === currentCustomEmail)
                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+            document.getElementById('quotaCount').innerText = userHistory.length;
             renderHistoryList();
         } catch (err) {
             document.getElementById('historyList').innerHTML = '<p class="text-red-500 text-center mt-5 text-sm font-bold">Gagal memuat riwayat.</p>';
@@ -1607,6 +1612,7 @@
             await deleteDoc(docRef);
             
             userHistory = userHistory.filter(h => h.id !== id);
+            document.getElementById('quotaCount').innerText = userHistory.length;
             renderHistoryList();
             window.showToast("Naskah berhasil dihapus.", false);
         } catch(err) {
